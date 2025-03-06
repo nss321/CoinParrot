@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		116CB5A92D79965D00F4E57D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5A82D79965D00F4E57D /* SnapKit */; };
+		116CB5AC2D79968700F4E57D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5AB2D79968700F4E57D /* RealmSwift */; };
+		116CB5AF2D7996D000F4E57D /* RxRealm in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5AE2D7996D000F4E57D /* RxRealm */; };
+		116CB5B22D7996E200F4E57D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B12D7996E200F4E57D /* RxCocoa */; };
+		116CB5B52D7996F800F4E57D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B42D7996F800F4E57D /* Alamofire */; };
+		116CB5B82D79970E00F4E57D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B72D79970E00F4E57D /* Kingfisher */; };
+		116CB5BA2D79E93900F4E57D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 116CB5B92D79E93300F4E57D /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		116CB58F2D7995FD00F4E57D /* CoinParrot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinParrot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		116CB5B92D79E93300F4E57D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +47,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				116CB5B82D79970E00F4E57D /* Kingfisher in Frameworks */,
+				116CB5B52D7996F800F4E57D /* Alamofire in Frameworks */,
+				116CB5AF2D7996D000F4E57D /* RxRealm in Frameworks */,
+				116CB5AC2D79968700F4E57D /* RealmSwift in Frameworks */,
+				116CB5B22D7996E200F4E57D /* RxCocoa in Frameworks */,
+				116CB5A92D79965D00F4E57D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +62,7 @@
 		116CB5862D7995FD00F4E57D = {
 			isa = PBXGroup;
 			children = (
+				116CB5B92D79E93300F4E57D /* .gitignore */,
 				116CB5912D7995FD00F4E57D /* CoinParrot */,
 				116CB5902D7995FD00F4E57D /* Products */,
 			);
@@ -78,6 +96,12 @@
 			);
 			name = CoinParrot;
 			packageProductDependencies = (
+				116CB5A82D79965D00F4E57D /* SnapKit */,
+				116CB5AB2D79968700F4E57D /* RealmSwift */,
+				116CB5AE2D7996D000F4E57D /* RxRealm */,
+				116CB5B12D7996E200F4E57D /* RxCocoa */,
+				116CB5B42D7996F800F4E57D /* Alamofire */,
+				116CB5B72D79970E00F4E57D /* Kingfisher */,
 			);
 			productName = CoinParrot;
 			productReference = 116CB58F2D7995FD00F4E57D /* CoinParrot.app */;
@@ -107,6 +131,14 @@
 			);
 			mainGroup = 116CB5862D7995FD00F4E57D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				116CB5A72D79965D00F4E57D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				116CB5AA2D79968700F4E57D /* XCRemoteSwiftPackageReference "realm-swift" */,
+				116CB5AD2D7996D000F4E57D /* XCRemoteSwiftPackageReference "RxRealm" */,
+				116CB5B02D7996E200F4E57D /* XCRemoteSwiftPackageReference "RxSwift" */,
+				116CB5B32D7996F800F4E57D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				116CB5B62D79970E00F4E57D /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 116CB5902D7995FD00F4E57D /* Products */;
 			projectDirPath = "";
@@ -122,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				116CB5BA2D79E93900F4E57D /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,11 +181,13 @@
 				DEVELOPMENT_TEAM = W43DLLFB4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CoinParrot/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "배정훈";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -160,9 +195,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sean.CoinParrot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -176,11 +215,13 @@
 				DEVELOPMENT_TEAM = W43DLLFB4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CoinParrot/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "배정훈";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -188,9 +229,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sean.CoinParrot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -335,6 +380,90 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		116CB5A72D79965D00F4E57D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		116CB5AA2D79968700F4E57D /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.44.0;
+			};
+		};
+		116CB5AD2D7996D000F4E57D /* XCRemoteSwiftPackageReference "RxRealm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxRealm.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.7;
+			};
+		};
+		116CB5B02D7996E200F4E57D /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.0;
+			};
+		};
+		116CB5B32D7996F800F4E57D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		116CB5B62D79970E00F4E57D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		116CB5A82D79965D00F4E57D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 116CB5A72D79965D00F4E57D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		116CB5AB2D79968700F4E57D /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 116CB5AA2D79968700F4E57D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		116CB5AE2D7996D000F4E57D /* RxRealm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 116CB5AD2D7996D000F4E57D /* XCRemoteSwiftPackageReference "RxRealm" */;
+			productName = RxRealm;
+		};
+		116CB5B12D7996E200F4E57D /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 116CB5B02D7996E200F4E57D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		116CB5B42D7996F800F4E57D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 116CB5B32D7996F800F4E57D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		116CB5B72D79970E00F4E57D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 116CB5B62D79970E00F4E57D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 116CB5872D7995FD00F4E57D /* Project object */;
 }
