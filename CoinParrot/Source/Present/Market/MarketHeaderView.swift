@@ -11,12 +11,6 @@ import SnapKit
 
 final class MarketHeaderView: BaseView {
     
-    private let borderLine = {
-        let view = UIView()
-        view.backgroundColor = .coinParrotGray.withAlphaComponent(0.3)
-        return view
-    }()
-    
     private let coinNameColumnLabel = {
         let label = UILabel()
         label.text = "코인"
@@ -30,13 +24,8 @@ final class MarketHeaderView: BaseView {
     let sortByAmountButton = SortButton(title: "거래대금")
     
     override func configLayout() {
-        [borderLine, coinNameColumnLabel, sortByPriceButton, sortByChangesButton, sortByAmountButton]
+        [coinNameColumnLabel, sortByPriceButton, sortByChangesButton, sortByAmountButton]
             .forEach { addSubview($0) }
-        
-        borderLine.snp.makeConstraints {
-            $0.top.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(1)
-        }
         
         coinNameColumnLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()

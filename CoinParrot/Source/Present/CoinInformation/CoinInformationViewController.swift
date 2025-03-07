@@ -19,6 +19,9 @@ final class CoinInformationViewController: BaseViewController {
     
     override func configView() {
         navigationItem.setLeftBarButton(UIBarButtonItem(customView: UILabel.informationNavLabel()), animated: false)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
     }
     
 }
