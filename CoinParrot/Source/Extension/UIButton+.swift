@@ -15,6 +15,7 @@ extension UIButton.Configuration {
         config.attributedTitle = attribString
         config.baseForegroundColor = .coinParrotNavy
         config.background.backgroundColor = .clear
+        config.contentInsets = .zero
         return config
     }
 }

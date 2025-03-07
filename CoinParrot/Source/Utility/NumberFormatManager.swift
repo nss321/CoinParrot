@@ -13,9 +13,9 @@ final class NumberFormatManager {
     private let formatter = NumberFormatter()
     
     /// Add comma to Int
-    func commaNumber(number: Int) -> String {
+    func commaNumber(number: Double) -> String {
         formatter.numberStyle = .decimal
-        if let number = formatter.string(for: number) {
+        if let number = formatter.string(for: Int(number)) {
             return number
         } else {
             print(#function, "문자열을 변환할 수 없음!!")
@@ -30,4 +30,3 @@ final class NumberFormatManager {
         return String(roundedNumber)
     }
 }
-

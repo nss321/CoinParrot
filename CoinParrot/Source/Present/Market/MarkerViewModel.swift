@@ -17,6 +17,7 @@ final class MarkerViewModel: ViewModel {
     }
     
     struct Output {
+        let mockDataSource: Driver<[MarketData]>
         let output: Driver<Void>
     }
     
@@ -24,6 +25,7 @@ final class MarkerViewModel: ViewModel {
     var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
+        let mockData = BehaviorRelay(value: [MarketData]())
         let test = PublishRelay<Void>()
         
         [
@@ -38,9 +40,11 @@ final class MarkerViewModel: ViewModel {
                 .disposed(by: disposeBag)
         }
         
+        mockData.accept(mockMarketData)
         
         
         return Output(
+            mockDataSource: mockData.asDriver(),
             output: test.asDriver(onErrorDriveWith: .empty())
         )
     }

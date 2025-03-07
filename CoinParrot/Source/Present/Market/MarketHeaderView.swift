@@ -44,11 +44,11 @@ final class MarketHeaderView: BaseView {
         }
         sortByPriceButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview().offset(-largeMargin)
+            $0.trailing.equalToSuperview().inset(screenWidth*0.5)
         }
         sortByChangesButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(sortByPriceButton.snp.trailing).offset(largeMargin)
+            $0.trailing.equalToSuperview().inset(screenWidth*0.3)
         }
         sortByAmountButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
