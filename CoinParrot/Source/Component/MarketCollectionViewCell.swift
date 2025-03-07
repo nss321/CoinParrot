@@ -89,7 +89,8 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
     
     func config(item: MarketData) {
         // 종목명
-        nameLabel.text = item.market
+        let coinName = item.market.split(separator: "-")
+        nameLabel.text = "\(coinName[1])/\(coinName[0])"
         
         // 현재가
         priceLabel.text = checkNumber(number: item.tradePrice)
