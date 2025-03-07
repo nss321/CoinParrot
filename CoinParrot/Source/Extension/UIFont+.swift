@@ -16,5 +16,11 @@ extension UIFont {
     static func regularPrimary() -> UIFont { return UIFont.systemFont(ofSize: 12) }
     /// regular, 9
     static func regularSecondary() -> UIFont { return UIFont.systemFont(ofSize: 9) }
+    
+    /// heavy, 18, brown
+    static func marketTabNavTitle() -> UIFont { return UIFont.systemFont(ofSize: 18, weight: .heavy) }
+    
+    /// heavy, 18, coinParrotNavy
+    static func informationTabNavTitle() -> UIFont { return UIFont.systemFont(ofSize: 18, weight: .heavy) }
 }
 
