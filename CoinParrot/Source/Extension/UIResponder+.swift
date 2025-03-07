@@ -18,4 +18,8 @@ extension UIResponder {
     /// 20
     var largeMargin: Int { 20 }
     
+    var screenWidth: CGFloat { UIScreen.main.bounds.width }
+    
+    var screenHeight: CGFloat { UIScreen.main.bounds.height }
+    
 }

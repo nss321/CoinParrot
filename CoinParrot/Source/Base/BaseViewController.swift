@@ -7,7 +7,12 @@
 
 import UIKit
 
+import RxSwift
+
 class BaseViewController: UIViewController, ViewConfig {
+    
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()

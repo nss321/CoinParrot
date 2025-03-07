@@ -10,35 +10,54 @@ import UIKit
 import SnapKit
 
 final class MarketHeaderView: BaseView {
+    
+    private let borderLine = {
+        let view = UIView()
+        view.backgroundColor = .coinParrotGray.withAlphaComponent(0.3)
+        return view
+    }()
+    
     private let coinNameColumnLabel = {
         let label = UILabel()
         label.text = "코인"
-        label.font = .boldSecondary()
+        label.font = .boldPrimary()
         label.textColor = .coinParrotNavy
         label.textAlignment = .left
         return label
     }()
-    private let coinPriceSortButton = {
-        let button = UIButton()
-        button.configuration = .sortButtonStyle(title: "현재가")
-        return button
-    }()
-    private let priceChangesSortButton = {
-        let button = UIButton()
-        button.configuration = .sortButtonStyle(title: "전일대비")
-        return button
-    }()
-    private let tradeAmountSortButton = {
-        let button = UIButton()
-        button.configuration = .sortButtonStyle(title: "거래대금")
-        return button
-    }()
+    let sortByPriceButton = SortButton(title: "현재가")
+    let sortByChangesButton = SortButton(title: "전일대비")
+    let sortByAmountButton = SortButton(title: "거래대금")
     
     override func configLayout() {
+        [borderLine, coinNameColumnLabel, sortByPriceButton, sortByChangesButton, sortByAmountButton]
+            .forEach { addSubview($0) }
         
+        borderLine.snp.makeConstraints {
+            $0.top.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+        
+        coinNameColumnLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(largeMargin)
+        }
+        sortByPriceButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview().offset(-largeMargin)
+        }
+        sortByChangesButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(sortByPriceButton.snp.trailing).offset(largeMargin)
+        }
+        sortByAmountButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(largeMargin)
+        }
     }
     
     override func configView() {
-    
+        backgroundColor = .coinParrotGray.withAlphaComponent(0.1)
     }
+    
 }

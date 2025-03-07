@@ -11,6 +11,8 @@ class BaseView: UIView, ViewConfig {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configLayout()
+        configView()
     }
     
     @available(*, unavailable)

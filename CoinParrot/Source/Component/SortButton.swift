@@ -7,13 +7,13 @@
 
 import UIKit
 
+enum SortState: Int {
+    case nonSelected = 0
+    case descending = 1
+    case ascending = 2
+}
+
 final class SortButton: UIButton, ViewConfig {
-    
-    enum SortState: Int {
-        case nonSelected = 0
-        case descending = 1
-        case ascending = 2
-    }
     
     var sort: SortState = .nonSelected
     
@@ -49,6 +49,7 @@ final class SortButton: UIButton, ViewConfig {
                 self?.sort = .nonSelected
                 print("Error Occured. Button State changed Non-Selected.")
             }
+            print(self?.sort.rawValue)
         }), for: .touchUpInside)
     }
     
