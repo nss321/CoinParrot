@@ -44,7 +44,6 @@ final class CoinInformationViewModel: ViewModel {
         let test = PublishRelay<String>()
         let isValid = PublishRelay<Void>()
         let mockData = BehaviorRelay(value: [TrendingHeader]())
-
         
         input.searchButtonClicked
             .throttle(.microseconds(300), scheduler: MainScheduler.instance)
@@ -70,17 +69,23 @@ final class CoinInformationViewModel: ViewModel {
             .bind(to: test)
             .disposed(by: disposeBag)
         
-        Observable.of(mockTrendingCoins)
-            .map { value -> [TrendingCoinDetails] in
-                Array(value)[0...13].map {
-                    $0.item
-                }
+        let mockDataObservable = Observable.zip(
+            Observable.just(mockTrendingCoins),
+            Observable.just(mockTrendingNFTs)
+        )
+        .map { trendingCoins, trendingNFTs in
+            let coinSection = TrendingHeader(title: "인기 검색어", subTitle: "02.16 00:30 기준", items: Array(trendingCoins)[0...13].map { Trending.coin($0.item) })
+            let nftSection = TrendingHeader(title: "인기 NFT", subTitle: nil, items: trendingNFTs.map { Trending.nft($0) })
+            return [coinSection, nftSection]
+        }
+    
+    
+        mockDataObservable
+            .bind(with: self) { owner, value in
+                mockData.accept(value)
             }
-            .bind(with: self, onNext: { owner, trendings in
-                let sections = [TrendingHeader(title: "인기 검색어", subTitle: "02.16 00:30 기준", items: trendings)]
-                mockData.accept(sections)
-            })
             .disposed(by: disposeBag)
+        
         
         return Output(
             mockDataSource: mockData.asDriver(),
