@@ -70,7 +70,7 @@ final class MarketViewController:  BaseViewController {
 }
 
 private extension MarketViewController {
-    private func layout() -> UICollectionViewFlowLayout {
+    func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(
             width: screenWidth,
@@ -79,4 +79,5 @@ private extension MarketViewController {
         layout.minimumLineSpacing = 0
         return layout
     }
+    
 }

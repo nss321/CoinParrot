@@ -34,6 +34,7 @@ final class CoinInformationViewModel: ViewModel {
     }
     
     struct Output {
+        let mockDataSource: Driver<[TrendingHeader]>
         let output: Driver<String>
     }
     
@@ -42,6 +43,8 @@ final class CoinInformationViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let test = PublishRelay<String>()
         let isValid = PublishRelay<Void>()
+        let mockData = BehaviorRelay(value: [TrendingHeader]())
+
         
         input.searchButtonClicked
             .throttle(.microseconds(300), scheduler: MainScheduler.instance)
@@ -67,7 +70,20 @@ final class CoinInformationViewModel: ViewModel {
             .bind(to: test)
             .disposed(by: disposeBag)
         
+        Observable.of(mockTrendingCoins)
+            .map { value -> [TrendingCoinDetails] in
+                Array(value)[0...13].map {
+                    $0.item
+                }
+            }
+            .bind(with: self, onNext: { owner, trendings in
+                let sections = [TrendingHeader(title: "인기 검색어", subTitle: "02.16 00:30 기준", items: trendings)]
+                mockData.accept(sections)
+            })
+            .disposed(by: disposeBag)
+        
         return Output(
+            mockDataSource: mockData.asDriver(),
             output: test.asDriver(onErrorDriveWith: .empty())
         )
     }

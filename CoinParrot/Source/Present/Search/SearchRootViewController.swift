@@ -38,7 +38,6 @@ final class SearchRootViewController: TabmanViewController {
             button.selectedTintColor = .coinParrotNavy
             button.font = .systemFont(ofSize: 14)
             button.selectedFont = .boldSystemFont(ofSize: 14)
-
         }
         
         bar.indicator.weight = .light
