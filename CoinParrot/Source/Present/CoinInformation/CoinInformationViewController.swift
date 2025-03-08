@@ -15,20 +15,26 @@ import SnapKit
 struct TrendingHeader {
     let title: String
     let subTitle: String?
-    var items: [TrendingCoinDetails]
+    var items: [Trending]
 }
 
 extension TrendingHeader: SectionModelType {
-    typealias Item = TrendingCoinDetails
+    typealias Item = Trending
     
-    init(original: TrendingHeader, items: [TrendingCoinDetails]) {
+    init(original: TrendingHeader, items: [Trending]) {
         self = original
         self.items = items
     }
 }
 
+enum Trending {
+    case coin(TrendingCoinDetails)
+    case nft(TrendingNFTItem)
+}
+
 final class CoinInformationViewController: BaseViewController {
     
+    // MARK: Property
     private lazy var searchBar = {
         let searchBar = UISearchBar()
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
@@ -49,17 +55,24 @@ final class CoinInformationViewController: BaseViewController {
     private lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: clayout())
         view.register(TrendingCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrendingCollectionViewHeader.id)
-        view.register(TrendingCollectionViewCell.self, forCellWithReuseIdentifier: TrendingCollectionViewCell.id)
+        view.register(TrendingCoinCollectionViewCell.self, forCellWithReuseIdentifier: TrendingCoinCollectionViewCell.id)
+        view.register(TrendingNFTCollectionViewCell.self, forCellWithReuseIdentifier: TrendingNFTCollectionViewCell.id)
+        view.isScrollEnabled = false
         view.backgroundColor = .clear
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.red.cgColor
         return view
     }()
     
     private let dataSource = RxCollectionViewSectionedReloadDataSource<TrendingHeader> { _, collectionView, indexPath, item in
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCollectionViewCell.id, for: indexPath) as! TrendingCollectionViewCell
-        cell.config(item: item, index: indexPath.item + 1)
-        return cell
+        switch item {
+        case .coin(let trendingCoin):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCoinCollectionViewCell.id, for: indexPath) as! TrendingCoinCollectionViewCell
+            cell.config(item: trendingCoin, index: indexPath.item+1)
+            return cell
+        case .nft(let trendingNft):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingNFTCollectionViewCell.id, for: indexPath) as! TrendingNFTCollectionViewCell
+            cell.config(item: trendingNft)
+            return cell
+        }
     } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrendingCollectionViewHeader.id, for: indexPath) as! TrendingCollectionViewHeader
         header.config(title: dataSource.sectionModels[indexPath.section].title, subTitle: dataSource.sectionModels[indexPath.section].subTitle)
@@ -69,6 +82,8 @@ final class CoinInformationViewController: BaseViewController {
     private let viewModel = CoinInformationViewModel()
     private let sectionSubject = BehaviorRelay(value: [TrendingHeader]())
 
+    
+    // MARK: Method
     override func bind() {
         let input = CoinInformationViewModel.Input(
             searchButtonClicked: searchBar.rx.searchButtonClicked,
@@ -89,6 +104,18 @@ final class CoinInformationViewController: BaseViewController {
         output.mockDataSource
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        collectionView.rx.modelSelected(Trending.self)
+            .bind(with: self) { owner, trending in
+                switch trending {
+                case .coin(let coin):
+                    print(coin)
+                case .nft(let nft):
+                    print(nft)
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     override func configLayout() {
@@ -112,14 +139,15 @@ final class CoinInformationViewController: BaseViewController {
     
 }
 
+    // MARK: Extension
 private extension CoinInformationViewController {
     func clayout() -> UICollectionViewLayout {
         
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             let section: NSCollectionLayoutSection
             
             if sectionIndex == 0 {
-                // 인기 검색어 섹션
+                // 인기 검색어
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/7))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
@@ -135,16 +163,19 @@ private extension CoinInformationViewController {
                 section.orthogonalScrollingBehavior = .none
 
             } else {
-                // 인기 NFT 섹션
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
-                
+                // 인기 NFT
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(72), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.2))
+                /// cellWidth + spacing + margin
+                let groupWidth = 72 * 7 + 6 * self!.smallMargin + 2 * self!.largeMargin
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(CGFloat(groupWidth)), heightDimension: .absolute(132))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                group.interItemSpacing = .fixed(CGFloat(self!.smallMargin))
+                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: CGFloat(self!.largeMargin), bottom: 0, trailing: CGFloat(self!.largeMargin))
                 
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
                 section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
             }
             
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
@@ -156,15 +187,4 @@ private extension CoinInformationViewController {
         return layout
     }
     
-    func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(
-            width: screenWidth/2,
-            height: 44
-        )
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        return layout
-    }
 }
