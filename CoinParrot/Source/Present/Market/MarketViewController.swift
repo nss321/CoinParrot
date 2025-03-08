@@ -58,6 +58,7 @@ final class MarketViewController:  BaseViewController {
         navigationItem.setLeftBarButton(UIBarButtonItem(customView: UILabel.marketNavLabel()), animated: false)
         collectionView.register(MarketCollectionViewCell.self, forCellWithReuseIdentifier: MarketCollectionViewCell.id)
         hasDecimalPlaces(number: 29822485605.47842841)
+        print(NumberFormatManager.shared.roundedNumeric(number: 806.0000000))
     }
     
     private func hasDecimalPlaces(number: Double) {

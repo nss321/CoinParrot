@@ -12,6 +12,8 @@ final class NumberFormatManager {
     
     private let formatter = NumberFormatter()
     
+    private init() { }
+    
     /// Add comma to Int
     func commaNumber(number: Double) -> String {
         formatter.numberStyle = .decimal

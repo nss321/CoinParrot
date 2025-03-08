@@ -19,24 +19,28 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
         label.textColor = .coinParrotNavy
         return label
     }()
+    
     private let priceLabel = {
         let label = UILabel()
         label.font = .regularPrimary()
         label.textColor = .coinParrotNavy
         return label
     }()
+    
     private let changesPercentageLabel = {
         let label = UILabel()
         label.font = .regularPrimary()
         label.textColor = .coinParrotNavy
         return label
     }()
+    
     private let changesAmountLabel = {
         let label = UILabel()
         label.font = .regularSecondary()
         label.textColor = .coinParrotNavy
         return label
     }()
+    
     private let amountLabel = {
         let label = UILabel()
         label.font = .regularPrimary()
@@ -68,14 +72,17 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
             $0.trailing.equalToSuperview().inset(screenWidth*0.5)
         }
+        
         changesPercentageLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
             $0.trailing.equalToSuperview().inset(screenWidth*0.3)
         }
+        
         changesAmountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(1.25)
             $0.trailing.equalToSuperview().inset(screenWidth*0.3)
         }
+        
         amountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
             $0.trailing.equalToSuperview().inset(largeMargin)
@@ -114,8 +121,8 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
         // 거래대금
         amountLabel.text = NumberFormatManager.shared.commaNumber(number: item.accTradePrice24h/1000000) + "백만"
         
-        contentView.layer.borderColor = UIColor.red.cgColor
-        contentView.layer.borderWidth = 1
+//        contentView.layer.borderColor = UIColor.red.cgColor
+//        contentView.layer.borderWidth = 1
         
     }
     

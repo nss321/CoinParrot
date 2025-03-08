@@ -14,6 +14,7 @@
 		116CB5B52D7996F800F4E57D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B42D7996F800F4E57D /* Alamofire */; };
 		116CB5B82D79970E00F4E57D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B72D79970E00F4E57D /* Kingfisher */; };
 		116CB5BA2D79E93900F4E57D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 116CB5B92D79E93300F4E57D /* .gitignore */; };
+		11F3C92A2D7BF7180023FD82 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 11F3C9292D7BF7180023FD82 /* Tabman */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 			files = (
 				116CB5B82D79970E00F4E57D /* Kingfisher in Frameworks */,
 				116CB5B52D7996F800F4E57D /* Alamofire in Frameworks */,
+				11F3C92A2D7BF7180023FD82 /* Tabman in Frameworks */,
 				116CB5AF2D7996D000F4E57D /* RxRealm in Frameworks */,
 				116CB5AC2D79968700F4E57D /* RealmSwift in Frameworks */,
 				116CB5B22D7996E200F4E57D /* RxCocoa in Frameworks */,
@@ -102,6 +104,7 @@
 				116CB5B12D7996E200F4E57D /* RxCocoa */,
 				116CB5B42D7996F800F4E57D /* Alamofire */,
 				116CB5B72D79970E00F4E57D /* Kingfisher */,
+				11F3C9292D7BF7180023FD82 /* Tabman */,
 			);
 			productName = CoinParrot;
 			productReference = 116CB58F2D7995FD00F4E57D /* CoinParrot.app */;
@@ -138,6 +141,7 @@
 				116CB5B02D7996E200F4E57D /* XCRemoteSwiftPackageReference "RxSwift" */,
 				116CB5B32D7996F800F4E57D /* XCRemoteSwiftPackageReference "Alamofire" */,
 				116CB5B62D79970E00F4E57D /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				11F3C9282D7BF7180023FD82 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 116CB5902D7995FD00F4E57D /* Products */;
@@ -430,6 +434,14 @@
 				minimumVersion = 8.3.0;
 			};
 		};
+		11F3C9282D7BF7180023FD82 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -462,6 +474,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 116CB5B62D79970E00F4E57D /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		11F3C9292D7BF7180023FD82 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11F3C9282D7BF7180023FD82 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

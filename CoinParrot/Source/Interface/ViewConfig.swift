@@ -14,7 +14,7 @@ protocol ViewConfig {
     func configView()
 }
 
-extension ViewConfig where Self: BaseViewController {
+extension ViewConfig where Self: BaseViewController{
     func configBackgroundColor() {
         view.backgroundColor = .white
     }
