@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
+final class MarketCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "MarketCollectionViewCell"
     
@@ -50,17 +50,7 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
     
     private let formatter = NumberFormatManager.shared
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configLayout()
-        configView()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configLayout() {
+    override func configLayout() {
         [nameLabel, priceLabel, changesPercentageLabel, changesAmountLabel, amountLabel].forEach { contentView.addSubview($0) }
         
         nameLabel.snp.makeConstraints {
@@ -87,13 +77,8 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
             $0.trailing.equalToSuperview().inset(largeMargin)
         }
-        
     }
-    
-    func configView() {
-        
-    }
-    
+
     func config(item: MarketData) {
         // 종목명
         let coinName = item.market.split(separator: "-")
@@ -120,10 +105,6 @@ final class MarketCollectionViewCell: UICollectionViewCell, ViewConfig {
 
         // 거래대금
         amountLabel.text = NumberFormatManager.shared.commaNumber(number: item.accTradePrice24h/1000000) + "백만"
-        
-//        contentView.layer.borderColor = UIColor.red.cgColor
-//        contentView.layer.borderWidth = 1
-        
     }
     
     private func checkNumber(number: Double) -> String {
