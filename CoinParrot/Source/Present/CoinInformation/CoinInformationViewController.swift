@@ -53,7 +53,7 @@ final class CoinInformationViewController: BaseViewController {
     }()
     
     private lazy var collectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: clayout())
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout())
         view.register(TrendingCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrendingCollectionViewHeader.id)
         view.register(TrendingCoinCollectionViewCell.self, forCellWithReuseIdentifier: TrendingCoinCollectionViewCell.id)
         view.register(TrendingNFTCollectionViewCell.self, forCellWithReuseIdentifier: TrendingNFTCollectionViewCell.id)
@@ -114,7 +114,8 @@ final class CoinInformationViewController: BaseViewController {
                     print(nft)
                 }
             }
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag
+            )
         
     }
     
@@ -141,7 +142,7 @@ final class CoinInformationViewController: BaseViewController {
 
     // MARK: Extension
 private extension CoinInformationViewController {
-    func clayout() -> UICollectionViewLayout {
+    func layout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             let section: NSCollectionLayoutSection
