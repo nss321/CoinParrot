@@ -96,8 +96,8 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
         if let url = URL(string: item.thumb) {
             imageView.kf.setImage(with: url){ [weak self] result in
                 switch result {
-                case .success(let value):
-                    print("image load success", value)
+                case .success(_): break
+//                    print("image load success", value)
                 case .failure(let error):
                     print("error occured", error)
                     self?.imageView.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)

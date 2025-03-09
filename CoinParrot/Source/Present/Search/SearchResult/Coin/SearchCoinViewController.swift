@@ -12,6 +12,7 @@ import SnapKit
 
 final class SearchCoinViewController: BaseViewController {
     
+    // TODO: 검색 결과 없을때 띄우기
     private let label = {
         let label = UILabel()
         label.text = "검색 결과가 없습니다."
@@ -27,15 +28,21 @@ final class SearchCoinViewController: BaseViewController {
         return view
     }()
     
-    private let viewModel = SearchCoinViewModel()
+    private(set) var viewModel = SearchCoinViewModel()
     
     override func bind() {
         let input = SearchCoinViewModel.Input()
         let output = viewModel.transform(input: input)
         
-        output.mockDataSource
+        output.result
             .drive(collectionView.rx.items(cellIdentifier: SearchCoinCollectionViewCell.id, cellType: SearchCoinCollectionViewCell.self))  { _, element, cell in
                 cell.config(item: element)
+            }
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.modelSelected(SearchCoin.self)
+            .bind(with: self) { owner, coin in
+                print(coin.symbol)
             }
             .disposed(by: disposeBag)
     }
@@ -51,6 +58,10 @@ final class SearchCoinViewController: BaseViewController {
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    override func configView() {
+        navigationItem.searchController = UISearchController()
     }
 }
 

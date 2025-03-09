@@ -43,17 +43,28 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
         config.cornerStyle = .large
         config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6)
         label.configuration = config
+        label.isUserInteractionEnabled = false
         return label
     }()
     
-    private let starButton = {
+    private lazy var starButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "star")?.withTintColor(.coinParrotNavy, renderingMode: .alwaysOriginal)
         config.background.backgroundColor = .clear
         button.configuration = config
+        button.addAction(UIAction(handler: { _ in
+            print("buttontapped")
+        }), for: .touchUpInside)
         return button
     }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        coinImageView.image = nil
+        symbolLabel.text = nil
+        nameLabel.text = nil
+    }
     
     override func configLayout() {
         [coinImageView,symbolLabel,nameLabel,rankLabel,starButton].forEach { contentView.addSubview($0) }
@@ -87,11 +98,12 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
     }
 
     func config(item: SearchCoin) {
+        coinImageView.kf.indicatorType = .activity
         if let url = URL(string: item.thumb) {
             coinImageView.kf.setImage(with: url) { [weak self] result in
                 switch result {
-                case .success(let value):
-                    print("image load success", value)
+                case .success(let value): break
+//                    print("image load success", value)
                 case .failure(let error):
                     print("error occured", error)
                     self?.coinImageView.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
@@ -104,23 +116,27 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
         symbolLabel.text = item.symbol
         
         nameLabel.text = item.name
-
-        rankLabel.configuration?.attributedTitle = AttributedString(NSAttributedString(
-            string: "#\(item.marketCapRank)",
-            attributes: [
-                .font : UIFont.boldSecondary(),
-                .foregroundColor : UIColor.coinParrotGray
-            ]
-        ))
+        
+        rankLabel.configuration?.attributedTitle = attribRank(rank: item.marketCapRank)
 
         rankLabel.snp.remakeConstraints {
             $0.top.equalTo(symbolLabel.snp.top)
             $0.height.equalTo(symbolLabel.intrinsicContentSize.height)
             $0.leading.equalTo(symbolLabel.snp.trailing).offset(smallMargin/2)
         }
-        
-        starButton.addAction(UIAction(handler: { _ in
-            print("buttonTapped")
-        }), for: .touchUpInside)
+    }
+    
+    private func attribRank(rank: Int?) -> AttributedString {
+        var mutableString: NSMutableAttributedString
+        if let rank {
+            mutableString = NSMutableAttributedString(string: "#\(rank)")
+        } else {
+            mutableString = NSMutableAttributedString(string: "unranked")
+        }
+        mutableString.setAttributes(
+            [.font : UIFont.boldSecondary(), .foregroundColor : UIColor.coinParrotGray],
+            range: NSRange(location: 0, length: mutableString.string.count)
+        )
+        return AttributedString(mutableString)
     }
 }

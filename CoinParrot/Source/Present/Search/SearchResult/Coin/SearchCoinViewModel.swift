@@ -14,25 +14,23 @@ final class SearchCoinViewModel: ViewModel {
     }
     
     struct Output {
-        let mockDataSource: Driver<[SearchCoin]>
+        let result: Driver<[SearchCoin]>
     }
     
     var disposeBag = DisposeBag()
+
+    let result = BehaviorRelay(value: [SearchCoin]())
     
     func transform(input: Input) -> Output {
-        let mockData = BehaviorRelay(value: [SearchCoin]())
-        
-        Observable.just(mockSearchCoin)
-            .bind(with: self) { owner, result in
-                mockData.accept(result)
-            }
+
+        let coinList = BehaviorRelay(value: [SearchCoin]())
+
+        result
+            .bind(to: coinList)
             .disposed(by: disposeBag)
         
-//        mockData.accept(mockMarketData)
-        
-        
         return Output(
-            mockDataSource: mockData.asDriver()
+            result: coinList.asDriver()
         )
     }
     

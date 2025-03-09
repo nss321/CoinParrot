@@ -61,6 +61,7 @@ final class CoinInformationViewController: BaseViewController {
         view.backgroundColor = .clear
         return view
     }()
+
     
     private let dataSource = RxCollectionViewSectionedReloadDataSource<TrendingHeader> { _, collectionView, indexPath, item in
         switch item {
@@ -95,8 +96,10 @@ final class CoinInformationViewController: BaseViewController {
         output.output
             .drive(with: self) { owner, text in
                 print(text)
-                let vc = SearchRootViewController()
-                owner.navigationItem.backButtonTitle = text
+                let vc = SearchTabViewController(viewModel: SearchTabViewModel(keyword: text))
+                vc.viewModel.completion = {
+                    self.searchBar.text = $0
+                }
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -114,9 +117,7 @@ final class CoinInformationViewController: BaseViewController {
                     print(nft)
                 }
             }
-            .disposed(by: disposeBag
-            )
-        
+            .disposed(by: disposeBag)
     }
     
     override func configLayout() {
@@ -135,9 +136,14 @@ final class CoinInformationViewController: BaseViewController {
     }
     
     override func configView() {
+        navigationItem.backButtonTitle = ""
         navigationItem.setLeftBarButton(UIBarButtonItem(customView: UILabel.informationNavLabel()), animated: false)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
 }
 
     // MARK: Extension
