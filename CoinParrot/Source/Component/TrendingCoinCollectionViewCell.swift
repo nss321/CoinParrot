@@ -97,7 +97,15 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
         indexLabel.text = String(index)
         
         if let url = URL(string: item.small) {
-            coinImageView.kf.setImage(with: url)
+            coinImageView.kf.setImage(with: url) { [weak self] result in
+                switch result {
+                case .success(let value):
+                    print("image load success", value)
+                case .failure(let error):
+                    print("error occured", error)
+                    self?.coinImageView.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
+                }
+            }
         } else {
             coinImageView.image = UIImage(systemName: "xmark")
         }
