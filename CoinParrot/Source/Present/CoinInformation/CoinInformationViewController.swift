@@ -82,7 +82,6 @@ final class CoinInformationViewController: BaseViewController {
     
     private let viewModel = CoinInformationViewModel()
     private let sectionSubject = BehaviorRelay(value: [TrendingHeader]())
-
     
     // MARK: Method
     override func bind() {

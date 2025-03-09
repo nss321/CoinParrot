@@ -5,6 +5,8 @@
 //  Created by BAE on 3/8/25.
 //
 
+import Foundation
+
 import RxSwift
 import RxCocoa
 
@@ -21,11 +23,47 @@ final class CoinInformationViewModel: ViewModel {
     
     var disposeBag = DisposeBag()
     
+    init() {
+
+    }
+    
     func transform(input: Input) -> Output {
         let test = PublishRelay<String>()
         let isValid = PublishRelay<Void>()
-        let mockData = BehaviorRelay(value: [TrendingHeader]())
+        let trendHeader = BehaviorRelay(value: [TrendingHeader]())
         
+        // 뷰 진입시 캐시에서 데이터를 꺼내옴.
+        Observable.just(())
+            .flatMap({ _ in
+                NetworkManager.shared.loadTrendingData()
+            })
+            .bind(with: self) { owner, cache in
+                switch cache {
+                case .success(let value):
+                    trendHeader.accept(owner.modifyResponse(response: value))
+                case .failure(let error):
+                    debugPrint(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 10분마다
+        NotificationCenter.default.rx.notification(Notification.Name("trend"))
+            .flatMap { _ in
+                NetworkManager.shared.loadTrendingData()
+            }
+            .bind(with: self) { owner, response in
+                print("노티 받음")
+                switch response {
+                case .success(let value):
+                    trendHeader.accept(owner.modifyResponse(response: value))
+                case .failure(let error):
+                    debugPrint(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+    
         input.searchButtonClicked
             .throttle(.microseconds(300), scheduler: MainScheduler.instance)
             .withLatestFrom(input.searchBarText.orEmpty)
@@ -35,7 +73,7 @@ final class CoinInformationViewModel: ViewModel {
             .bind(with: self) { owner, valid in
                 switch valid {
                 case .empty:
-                    AlertManager.shared.showSimpleAlert(title: "검색어", message: KeywordValidation.empty.message) 
+                    AlertManager.shared.showSimpleAlert(title: "검색어", message: KeywordValidation.empty.message)
 //                case .short:
 //                    AlertManager.shared.showSimpleAlert(title: "검색어", message: KeywordValidation.short.message)
                 case .valid:
@@ -49,25 +87,16 @@ final class CoinInformationViewModel: ViewModel {
             .bind(to: test)
             .disposed(by: disposeBag)
         
-        let mockDataObservable = Observable.zip(
-            Observable.just(mockTrendingCoins),
-            Observable.just(mockTrendingNFTs)
-        )
-        .map { trendingCoins, trendingNFTs in
-            let coinSection = TrendingHeader(title: "인기 검색어", subTitle: "02.16 00:30 기준", items: Array(trendingCoins)[0...13].map { Trending.coin($0.item) })
-            let nftSection = TrendingHeader(title: "인기 NFT", subTitle: nil, items: trendingNFTs.map { Trending.nft($0) })
-            return [coinSection, nftSection]
-        }
-    
-        mockDataObservable
-            .bind(with: self) { owner, value in
-                mockData.accept(value)
-            }
-            .disposed(by: disposeBag)
-        
         return Output(
-            mockDataSource: mockData.asDriver(),
+            mockDataSource: trendHeader.asDriver(),
             output: test.asDriver(onErrorDriveWith: .empty())
         )
+    }
+    
+    private func modifyResponse(response: TrendingResponse) -> [TrendingHeader] {
+        // TODO: DateManager 만들어서 날짜 데이터 가공해야함
+        let coinSection = TrendingHeader(title: "인기 검색어", subTitle: "\(Date.now)", items: response.coins[0...13].map { Trending.coin($0.item) })
+        let nftSection = TrendingHeader(title: "인기 NFT", subTitle: nil, items: response.nfts.map { Trending.nft($0) })
+        return [coinSection, nftSection]
     }
 }
