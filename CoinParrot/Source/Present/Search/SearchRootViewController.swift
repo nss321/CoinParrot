@@ -17,13 +17,13 @@ final class SearchRootViewController: TabmanViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configView()
         configTabman()
     }
     
     private func configView() {
         view.backgroundColor = .white
         self.dataSource = self
-        
     }
     
     private func configTabman() {
