@@ -23,13 +23,13 @@ final class TimerManager {
         
         marketListTimer?.setEventHandler {
             // TODO: market list 네트워크 요청
-//            NetworkManager.shared.fetchTrendingData()
-            DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
-                NotificationCenter.default.post(name: Notification.Name("trend"), object: nil)
+            NetworkManager.shared.fetchMarketData()
+            DispatchQueue.global().asyncAfter(deadline: .now()+1) {
+                NotificationCenter.default.post(name: Notification.Name("market"), object: nil)
             }
         }
 
-        marketListTimer?.schedule(deadline: .now(), repeating: 600)
+        marketListTimer?.schedule(deadline: .now(), repeating: 5)
         
         marketListTimer?.resume()
     }

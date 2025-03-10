@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
 
+        TimerManager.shared.startMarketListFetchTimer()
         TimerManager.shared.startTrendFetchTimer()
 
         return true

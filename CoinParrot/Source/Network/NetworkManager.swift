@@ -16,8 +16,22 @@ final class NetworkManager {
         
     private init() { }
     
-    func callMarketList() {
-//        AF.request(APIRequest.market, metho)
+    /// fetching market data overwrite origin data, every 5 second.
+    func fetchMarketData() {
+        let api = APIRequest.market
+        AF.request(api.endpoint, method: api.method) {
+            $0.cachePolicy = .reloadIgnoringLocalCacheData
+        }
+        .validate()
+        .responseData { response in
+            switch response.result {
+            case .success(_):
+                print("market data fetch succeed, response is cached.")
+            case .failure(let error):
+                print("failed to fetch trending data >>>")
+                dump(error)
+            }
+        }
     }
     
     /// fetching trend data overwrite origin cached data, every 10 minutes.
