@@ -32,15 +32,18 @@ final class MarketHeaderView: BaseView {
             $0.leading.equalToSuperview().inset(largeMargin)
         }
         sortByPriceButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
+            $0.width.equalTo(sortByPriceButton.title.intrinsicContentSize.width + CGFloat(mediumMargin))
             $0.trailing.equalToSuperview().inset(screenWidth*0.5)
         }
         sortByChangesButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
+            $0.width.equalTo(sortByChangesButton.title.intrinsicContentSize.width + CGFloat(mediumMargin))
             $0.trailing.equalToSuperview().inset(screenWidth*0.3)
         }
         sortByAmountButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
+            $0.width.equalTo(sortByAmountButton.title.intrinsicContentSize.width + CGFloat(mediumMargin))
             $0.trailing.equalToSuperview().inset(largeMargin)
         }
     }

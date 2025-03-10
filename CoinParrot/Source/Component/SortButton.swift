@@ -13,7 +13,7 @@ final class SortButton: UIButton, ViewConfig {
     
     var type: SortType?
     
-    private let title = {
+    let title = {
         let label = UILabel()
         label.font = .boldPrimary()
         label.textColor = .coinParrotNavy
