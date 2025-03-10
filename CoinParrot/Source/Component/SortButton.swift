@@ -7,15 +7,34 @@
 
 import UIKit
 
-enum SortState: Int {
-    case nonSelected = 0
-    case descending = 1
-    case ascending = 2
-}
+import SnapKit
 
 final class SortButton: UIButton, ViewConfig {
     
-    var sort: SortState = .nonSelected
+    var type: SortType?
+    
+    private let title = {
+        let label = UILabel()
+        label.font = .boldPrimary()
+        label.textColor = .coinParrotNavy
+        return label
+    }()
+    
+    private let upIndicator = {
+        let view = UIImageView()
+        view.image = UIImage(systemName: "arrowtriangle.up.fill")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    private let downIndicator = {
+        let view = UIImageView()
+        view.image = UIImage(systemName: "arrowtriangle.down.fill")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    let labelHeight = ("1" as NSString).size(withAttributes: [ .font : UIFont.boldSystemFont(ofSize: 12)]).height
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,30 +46,36 @@ final class SortButton: UIButton, ViewConfig {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(title: String) {
+    convenience init(title: String, type: SortType) {
         self.init()
-        configuration = .sortButtonStyle(title: title)
+        self.title.text = title
+        self.type = type
     }
     
     func configLayout() {
+        addSubview(title)
+        addSubview(upIndicator)
+        addSubview(downIndicator)
+            
+        title.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalTo(upIndicator.snp.leading).inset(4)
+        }
         
+        upIndicator.snp.makeConstraints {
+            $0.top.equalTo(title.snp.top).offset(-3)
+            $0.height.equalTo(12)
+            $0.trailing.equalToSuperview()
+        }
+        
+        downIndicator.snp.makeConstraints {
+            $0.bottom.equalTo(title.snp.bottom).offset(3)
+            $0.height.equalTo(12)
+            $0.trailing.equalToSuperview()
+        }
     }
     
     func configView() {
-        addAction(UIAction(handler: { [weak self] _ in
-            switch self?.sort {
-            case .nonSelected:
-                self?.sort = .descending
-            case .descending:
-                self?.sort = .ascending
-            case .ascending:
-                self?.sort = .nonSelected
-            case .none:
-                self?.sort = .nonSelected
-                print("Error Occured. Button State changed Non-Selected.")
-            }
-            print(self?.sort.rawValue)
-        }), for: .touchUpInside)
     }
     
 }
