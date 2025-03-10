@@ -17,12 +17,12 @@ final class NetworkManager {
     private init() { }
     
     func callMarketList() {
-        
+//        AF.request(APIRequest.market, metho)
     }
     
     /// fetching trend data overwrite origin cached data, every 10 minutes.
     func fetchTrendingData() {
-        let api = CoinGeckoRequest.trending
+        let api = APIRequest.trending
         AF.request(api.endpoint, method: api.method, headers: api.header) {
             $0.cachePolicy = .reloadIgnoringLocalCacheData
         }
@@ -41,13 +41,13 @@ final class NetworkManager {
     /// load trend data from cache.
     func loadTrendingData() -> Single<Result<TrendingResponse, APIError>> {
         return Single.create { value in
-            let api = CoinGeckoRequest.trending
+            let api = APIRequest.trending
             AF.request(api.endpoint, method: api.method, headers: api.header) {
                 $0.cachePolicy = .returnCacheDataElseLoad
             }
             .validate()
             .responseDecodable(of: TrendingResponse.self, completionHandler: { response in
-                dump(response)
+//                dump(response)
                 switch response.result {
                 case .success(let data):
                     value(.success(.success(data)))
@@ -76,7 +76,7 @@ final class NetworkManager {
         }
     }
     
-    func callSearchAPI<T: Decodable>(api: CoinGeckoRequest, type: T.Type) -> Single<Result<T, APIError>> {
+    func callRequest<T: Decodable>(api: APIRequest, type: T.Type) -> Single<Result<T, APIError>> {
         
         return Single.create { value in
             
