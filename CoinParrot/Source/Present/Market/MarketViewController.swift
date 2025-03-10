@@ -26,8 +26,10 @@ final class MarketViewController:  BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.output
-            .drive(with: self) { owner, _ in
-                print("탭")
+            .drive(with: self) { owner, state in
+                print(state)
+                // 버튼 UI 변경
+                
             }
             .disposed(by: disposeBag)
         
@@ -37,6 +39,8 @@ final class MarketViewController:  BaseViewController {
                 cell.config(item: element)
             }
             .disposed(by: disposeBag)
+        
+        
     }
     
     override func configLayout() {

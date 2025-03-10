@@ -49,6 +49,10 @@ class SortManager {
         }
     }
     
+    func current() -> String {
+        "\(currnetType), \(currnetState)"
+    }
+    
     
 //    private func sort1() {
 //        sort2(current: currentSort.sortType)

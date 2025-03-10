@@ -37,7 +37,7 @@ final class SearchTabViewModel: ViewModel {
         
         keyword
             .flatMap {
-                NetworkManager.shared.callSearchAPI(api: .searchCoin($0), type: SearchCoinResponse.self)
+                NetworkManager.shared.callRequest(api: .searchCoin($0), type: SearchCoinResponse.self)
             }
             .bind(with: self) { owner, response in
                 switch response {
@@ -74,7 +74,7 @@ final class SearchTabViewModel: ViewModel {
                 return text
             }
             .flatMap {
-                NetworkManager.shared.callSearchAPI(api: .searchCoin($0), type: SearchCoinResponse.self)
+                NetworkManager.shared.callRequest(api: .searchCoin($0), type: SearchCoinResponse.self)
             }
             .bind(with: self) { owner, response in
                 switch response {
