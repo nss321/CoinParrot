@@ -37,7 +37,7 @@ class SortManager {
         }
     }
     
-    func nextState() {
+    private func nextState() {
         switch currnetState {
         case .nonSelected:
             currnetState = .descending
@@ -52,46 +52,5 @@ class SortManager {
     func current() -> String {
         "\(currnetType), \(currnetState)"
     }
-    
-    
-//    private func sort1() {
-//        sort2(current: currentSort.sortType)
-//    }
-//    
-//    private func sort2(current: SortType) {
-//        
-//    }
-//    
-//    private func sort(current: SortType) -> [MarketData] {
-//        /*
-//         1. 현재 있는 데이터를
-//         2. 현재 정렬 상태에 따라 정렬해서
-//         3. 리턴 -> 아웃풋으로 전달
-//         
-//         tradePrice 현재가
-//         change 변화 구분(보합, 상승, 하락)
-//         changeRate 변화율
-//         changePrice 변화량
-//         acc_trade_price_24h 24시간 거래대금
-//         */
-//        
-//        let origin = mockMarketData
-//
-//        if currentSort.sortType == current {
-//            
-//        } else {
-//            return origin.sorted { lhs, rhs in
-//                
-//            }
-//        }
-//        
-//        
-//        
-//        
-//        // 현재가 오름차순
-//        let sortedList = origin.sorted { $0.tradePrice < $1.tradePrice }
-//        
-//        return []
-//    }
-//    
+
 }
