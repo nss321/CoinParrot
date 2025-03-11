@@ -471,9 +471,10 @@ final class CoinDetailViewController: BaseViewController {
         customView.addArrangedSubview(titleLabel)
         navigationItem.titleView = customView
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "star")
-        )
+        let likeButton = StarButton()
+        let item = LikedCoin(id: viewModel.coinId)
+        likeButton.bind(viewModel: StarButtonViewModel(item: item))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: likeButton)
     }
     
     // MARK: DataBinding

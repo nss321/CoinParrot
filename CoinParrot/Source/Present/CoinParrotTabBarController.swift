@@ -8,14 +8,16 @@
 import UIKit
 
 import RealmSwift
-import RxRelay
 
-class CoinParrotTabBarController: UITabBarController {
+final class CoinParrotTabBarController: UITabBarController {
+    
+    private let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configTabBar()
         setupTabbarAppearance()
+        print(realm.configuration.fileURL)
     }
     
     func configTabBar() {

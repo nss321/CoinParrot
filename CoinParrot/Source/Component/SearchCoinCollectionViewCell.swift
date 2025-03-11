@@ -47,17 +47,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private lazy var starButton = {
-        let button = UIButton()
-        var config = UIButton.Configuration.plain()
-        config.image = UIImage(systemName: "star")?.withTintColor(.coinParrotNavy, renderingMode: .alwaysOriginal)
-        config.background.backgroundColor = .clear
-        button.configuration = config
-        button.addAction(UIAction(handler: { _ in
-            print("buttontapped")
-        }), for: .touchUpInside)
-        return button
-    }()
+    private let starButton = StarButton()
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -126,6 +116,8 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
             $0.height.equalTo(symbolLabel.intrinsicContentSize.height)
             $0.leading.equalTo(symbolLabel.snp.trailing).offset(smallMargin/2)
         }
+        
+        starButton.bind(viewModel: StarButtonViewModel(item: LikedCoin(id: item.id)))
     }
     
     private func attribRank(rank: Int?) -> AttributedString {

@@ -42,7 +42,10 @@ final class SearchCoinViewController: BaseViewController {
         
         collectionView.rx.modelSelected(SearchCoin.self)
             .bind(with: self) { owner, coin in
-                print(coin.symbol)
+                print(coin.id, "상세 정보를 불러 옵니다.")
+                let viewModel = CoinDetailViewModel(coinId: coin.id)
+                let vc = CoinDetailViewController(viewModel: viewModel)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
