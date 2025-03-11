@@ -96,10 +96,12 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
     func config(item: TrendingCoinDetails, index: Int) {
         indexLabel.text = String(index)
         
+        coinImageView.kf.indicatorType = .activity
+        
         if let url = URL(string: item.small) {
             coinImageView.kf.setImage(with: url) { [weak self] result in
                 switch result {
-                case .success(let value): break
+                case .success(_): break
 //                    print("image load success", value)
                 case .failure(let error):
                     print("error occured", error)
@@ -107,7 +109,7 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
                 }
             }
         } else {
-            coinImageView.image = UIImage(systemName: "xmark")
+            coinImageView.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
         }
         
         titleLabel.text = item.symbol
@@ -115,14 +117,17 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
         subTitleLabel.text = item.name
         
         if let changes = item.data.priceChangePercentage24h["krw"] {
+            
             if changes < 0 {
                 changesLabel.textColor = .coinParrotBlue
                 changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.down.fill")?.withTintColor(.coinParrotBlue, renderingMode: .alwaysOriginal)
                 changesLabel.text = formatter.roundedNumeric(number: -changes) + "%"
+                
             } else if changes > 0 {
                 changesLabel.textColor = .coinParrotRed
                 changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.up.fill")?.withTintColor(.coinParrotRed, renderingMode: .alwaysOriginal)
                 changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
+                
             } else {
                 changesLabel.textColor = .coinParrotNavy
                 changesLabel.text = formatter.roundedNumeric(number: changes) + "%"

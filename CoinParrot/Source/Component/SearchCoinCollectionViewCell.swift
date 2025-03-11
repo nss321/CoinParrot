@@ -99,10 +99,12 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
 
     func config(item: SearchCoin) {
         coinImageView.kf.indicatorType = .activity
+        
+        coinImageView.kf.indicatorType = .activity
         if let url = URL(string: item.thumb) {
             coinImageView.kf.setImage(with: url) { [weak self] result in
                 switch result {
-                case .success(let value): break
+                case .success(_): break
 //                    print("image load success", value)
                 case .failure(let error):
                     print("error occured", error)
@@ -110,7 +112,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
                 }
             }
         } else {
-            coinImageView.image = UIImage(systemName: "xmark")
+            coinImageView.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
         }
         
         symbolLabel.text = item.symbol

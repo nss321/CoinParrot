@@ -68,7 +68,6 @@ final class MarketViewController:  BaseViewController {
     private func hasDecimalPlaces(number: Double) {
         let number = String(number)
         let pointIndex = number.firstIndex(of: ".")!
-        let endIndex = number.endIndex
         print(number[pointIndex...])
     }
 }

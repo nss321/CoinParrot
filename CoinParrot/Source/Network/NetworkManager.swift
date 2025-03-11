@@ -65,7 +65,7 @@ final class NetworkManager {
                 switch response.result {
                 case .success(let data):
                     value(.success(.success(data)))
-                case .failure(let error):
+                case .failure(_):
                     if let status = response.response?.statusCode {
                         switch status {
                         case 400:

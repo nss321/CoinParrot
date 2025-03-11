@@ -93,6 +93,9 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
     }
 
     func config(item: TrendingNFTItem) {
+        
+        imageView.kf.indicatorType = .activity
+        
         if let url = URL(string: item.thumb) {
             imageView.kf.setImage(with: url){ [weak self] result in
                 switch result {
@@ -104,21 +107,27 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
                 }
             }
         } else {
-            imageView.image = UIImage(systemName: "xmark")
+            imageView.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
         }
+        
         titleLabel.text = item.name
+        
         priceLabel.text = item.data.floorPrice
+        
         changesLabel.text = formatter.roundedNumeric(number: item.floorPrice24hPercentageChange)
         
         let changes = item.floorPrice24hPercentageChange
+        
         if changes < 0 {
             changesLabel.textColor = .coinParrotBlue
             changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.down.fill")?.withTintColor(.coinParrotBlue, renderingMode: .alwaysOriginal)
             changesLabel.text = formatter.roundedNumeric(number: -changes) + "%"
+            
         } else if changes > 0 {
             changesLabel.textColor = .coinParrotRed
             changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.up.fill")?.withTintColor(.coinParrotRed, renderingMode: .alwaysOriginal)
             changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
+            
         } else {
             changesLabel.textColor = .coinParrotNavy
             changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
