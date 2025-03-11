@@ -9,7 +9,7 @@ import UIKit
 
 extension UIButton.Configuration {
     static func moreButtonStyle(title: String) -> Self {
-        var config = UIButton.Configuration.plain()
+        var config = Self.plain()
         config.attributedTitle = AttributedString(NSAttributedString(string: title, attributes: [
             .font : UIFont.systemFont(ofSize: 14),
             .foregroundColor : UIColor.coinParrotGray
@@ -19,6 +19,14 @@ extension UIButton.Configuration {
         config.imagePadding = 4
         config.imagePlacement = .trailing
         config.background.backgroundColor = .white
+        return config
+    }
+    
+    static func starButton() -> Self {
+        var config = Self.plain()
+        config.image = UIImage(systemName: "star")?.withTintColor(.coinParrotNavy, renderingMode: .alwaysOriginal)
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 14))
+        config.background.backgroundColor = .clear
         return config
     }
 }
