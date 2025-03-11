@@ -15,6 +15,7 @@
 		116CB5B52D7996F800F4E57D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B42D7996F800F4E57D /* Alamofire */; };
 		116CB5B82D79970E00F4E57D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 116CB5B72D79970E00F4E57D /* Kingfisher */; };
 		116CB5BA2D79E93900F4E57D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 116CB5B92D79E93300F4E57D /* .gitignore */; };
+		11794E4B2D8027F9004AD670 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 11794E4A2D8027F9004AD670 /* Toast */; };
 		11F3C92A2D7BF7180023FD82 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 11F3C9292D7BF7180023FD82 /* Tabman */; };
 		11F3C9422D7C806A0023FD82 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 11F3C9412D7C806A0023FD82 /* Differentiator */; };
 		11F3C9442D7C806A0023FD82 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 11F3C9432D7C806A0023FD82 /* RxDataSources */; };
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11794E4B2D8027F9004AD670 /* Toast in Frameworks */,
 				116CB5B82D79970E00F4E57D /* Kingfisher in Frameworks */,
 				116CB5B52D7996F800F4E57D /* Alamofire in Frameworks */,
 				1145569C2D7F472800F315F2 /* DGCharts in Frameworks */,
@@ -114,6 +116,7 @@
 				11F3C9412D7C806A0023FD82 /* Differentiator */,
 				11F3C9432D7C806A0023FD82 /* RxDataSources */,
 				1145569B2D7F472800F315F2 /* DGCharts */,
+				11794E4A2D8027F9004AD670 /* Toast */,
 			);
 			productName = CoinParrot;
 			productReference = 116CB58F2D7995FD00F4E57D /* CoinParrot.app */;
@@ -153,6 +156,7 @@
 				11F3C9282D7BF7180023FD82 /* XCRemoteSwiftPackageReference "Tabman" */,
 				11F3C9402D7C806A0023FD82 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				1145569A2D7F472800F315F2 /* XCRemoteSwiftPackageReference "Charts" */,
+				11794E492D8027F9004AD670 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 116CB5902D7995FD00F4E57D /* Products */;
@@ -200,7 +204,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -234,7 +238,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -306,7 +310,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -363,7 +367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -453,6 +457,14 @@
 				minimumVersion = 8.3.0;
 			};
 		};
+		11794E492D8027F9004AD670 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 		11F3C9282D7BF7180023FD82 /* XCRemoteSwiftPackageReference "Tabman" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
@@ -506,6 +518,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 116CB5B62D79970E00F4E57D /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		11794E4A2D8027F9004AD670 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11794E492D8027F9004AD670 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		11F3C9292D7BF7180023FD82 /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;
