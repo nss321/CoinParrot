@@ -8,12 +8,46 @@
 import UIKit
 
 import DGCharts
+import Kingfisher
 import RxSwift
 import RxCocoa
 import SnapKit
+import Toast
 
 final class CoinDetailViewController: BaseViewController {
     
+    
+    // MARK: NavigationBar
+    private let customView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 8
+        view.alignment = .center
+        view.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
+        return view
+    }()
+    
+    private let symbol = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        view.kf.indicatorType = .activity
+        view.snp.makeConstraints {
+            $0.size.equalTo(24)
+        }
+        return view
+    }()
+    
+    private let titleLabel = {
+        let view = UILabel()
+        view.font = .boldSystemFont(ofSize: 16)
+        view.textColor = .coinParrotNavy
+        return view
+    }()
+    
+    
+    // MARK: View
     private let container = UIView()
     
     private let scrollView = UIScrollView()
@@ -40,15 +74,18 @@ final class CoinDetailViewController: BaseViewController {
     private let charts = {
         let chart = LineChartView()
         chart.noDataFont = .boldPrimary()
+        chart.noDataTextColor = .coinParrotGray
         chart.noDataText = "차트 데이터를 불러올 수 없습니다."
+        chart.backgroundColor = .clear
         chart.legend.enabled = false
         chart.xAxis.drawGridLinesEnabled = false
         chart.xAxis.drawAxisLineEnabled = false
         chart.xAxis.drawLabelsEnabled = false
         chart.leftAxis.enabled = false
         chart.rightAxis.enabled = false
-        chart.noDataTextColor = .coinParrotGray
-        chart.backgroundColor = .clear
+        chart.dragEnabled = false
+        chart.highlightPerTapEnabled = false
+        chart.setScaleEnabled(false)
         return chart
     }()
     
@@ -88,6 +125,7 @@ final class CoinDetailViewController: BaseViewController {
         button.configuration = .moreButtonStyle(title: "더보기")
         return button
     }()
+    
     
     // MARK: 종목정보 섹션
     private let marketInfoContainer = {
@@ -170,6 +208,7 @@ final class CoinDetailViewController: BaseViewController {
         label.textColor = .coinParrotGray
         return label
     }()
+    
     
     // MARK: 투자지표 섹션
     private let investContainer = {
@@ -421,7 +460,20 @@ final class CoinDetailViewController: BaseViewController {
     }
     
     override func configView() {
+        marketInfoMoreButton.addAction(UIAction(handler: { [weak self] _ in
+            self?.view.makeToast("준비 중입니다.", duration: 1.5)
+        }), for: .touchUpInside)
+        investMoreButton.addAction(UIAction(handler: { [weak self] _ in
+            self?.view.makeToast("준비 중입니다.", duration: 1.5)
+        }), for: .touchUpInside)
         
+        customView.addArrangedSubview(symbol)
+        customView.addArrangedSubview(titleLabel)
+        navigationItem.titleView = customView
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "star")
+        )
     }
     
     // MARK: DataBinding
@@ -432,8 +484,8 @@ final class CoinDetailViewController: BaseViewController {
         output.coinDetailInformation
             .drive(with: self) { owner, response in
                 if let item = response.first {
-                    owner.bindData(item: item)
-//                    print(item)
+                    owner.updateNavigationBar(item: item)
+                    owner.updateView(item: item)
                 } else {
                     print("no response")
                 }
@@ -443,7 +495,7 @@ final class CoinDetailViewController: BaseViewController {
 }
 
 private extension CoinDetailViewController {
-    func bindData(item: CoinDetail) {
+    func updateView(item: CoinDetail) {
         
         currentPrice.text = "₩" + checkNumber(number: item.currentPrice)
         
@@ -534,6 +586,25 @@ private extension CoinDetailViewController {
         dataSet.fill = LinearGradientFill(gradient: gradient, angle: 90)
         
         charts.data = LineChartData(dataSet: dataSet)
+    }
+    
+    func updateNavigationBar(item: CoinDetail) {
+        titleLabel.text = item.symbol.uppercased()
+        
+        if let url = URL(string: item.image) {
+            symbol.kf.setImage(with: url) { [weak self] result in
+                switch result {
+                case .success(_):
+                    break
+                case .failure(let error):
+                    print("error occured", error)
+                    self?.symbol.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
+                }
+            }
+        } else {
+            print("coin symbol image url is nil")
+            symbol.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
+        }
     }
     
     func checkNumber(number: Double) -> String {
