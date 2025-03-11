@@ -115,9 +115,9 @@ final class MarkerViewModel: ViewModel {
             case .nonSelected:
                 return origin.sorted { $0.accTradePrice24h > $1.accTradePrice24h }
             case .descending:
-                return origin.sorted { $0.changeRate > $1.changeRate }
+                return origin.sorted { $0.signedChangeRate > $1.signedChangeRate }
             case .ascending:
-                return origin.sorted { $0.changeRate < $1.changeRate }
+                return origin.sorted { $0.signedChangeRate < $1.signedChangeRate }
             }
         case .amount:
             switch SortManager.shared.currnetState {
