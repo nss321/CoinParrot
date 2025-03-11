@@ -128,4 +128,44 @@ final class NetworkManager {
             }
         }
     }
+    
+    // retry를 활용해 네트워크 에러를 처리하기 위해 오버로딩
+    func callRequest<T: Decodable>(api: APIRequest, type: T.Type) -> Observable<T> {
+        
+        return Observable<T>.create { value in
+            AF.request(api.endpoint, method: api.method, headers: api.header) { request in
+                // TODO: 네트워크 요청이 길어질 때 처리(10초, 30초 등)
+                request.cachePolicy = .returnCacheDataElseLoad
+            }
+            .validate(statusCode: 200...299)
+            .responseDecodable(of: T.self) { response in
+                
+                switch response.result {
+                case .success(let result):
+                    value.onNext(result)
+                    value.onCompleted()
+                    break
+                case .failure(let error):
+                    if let status = response.response?.statusCode {
+                        switch status {
+                        case 400:
+                            value.onError(APIError.invalidQuery)
+                        case 403:
+                            value.onError(APIError.unauthorizedAccess)
+                        case 404:
+                            value.onError(APIError.notFound)
+                        case 500:
+                            value.onError(APIError.systemError)
+                        default:
+                            value.onError(APIError.unknownResponse)
+                        }
+                    }
+                    dump(error)
+                }
+            }
+            return Disposables.create {
+                print("통신끝")
+            }
+        }
+    }
 }
