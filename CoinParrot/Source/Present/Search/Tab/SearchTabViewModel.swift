@@ -16,6 +16,7 @@ final class SearchTabViewModel: ViewModel {
     
     struct Output {
         let result: BehaviorRelay<[SearchCoin]>
+        let errorNoti: Driver<String>
     }
     
     var disposeBag = DisposeBag()
@@ -88,7 +89,8 @@ final class SearchTabViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            result: result
+            result: result,
+            errorNoti: errorNoti.asDriver(onErrorDriveWith: .empty())
         )
     }
     

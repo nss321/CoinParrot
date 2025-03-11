@@ -52,8 +52,4 @@ final class MarketHeaderView: BaseView {
         backgroundColor = .coinParrotGray.withAlphaComponent(0.1)
     }
     
-//    func updateSortButtonIndicator(sort: CurrentSort) {
-//        
-//    }
-    
 }

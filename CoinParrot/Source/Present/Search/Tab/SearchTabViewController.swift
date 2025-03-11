@@ -63,9 +63,15 @@ final class SearchTabViewController: TabmanViewController, ViewConfig {
         )
         let output = viewModel.transform(input: input)
         
-        // 각 뷰에 뿌려줘야함.
+        
         output.result
             .bind(to: coinViewController.viewModel.result)
+            .disposed(by: disposeBag)
+        
+        output.errorNoti
+            .drive(with: self) { owner, message in
+                AlertManager.shared.showSimpleAlert(title: "에러", message: message)
+            }
             .disposed(by: disposeBag)
     }
     
@@ -96,6 +102,11 @@ final class SearchTabViewController: TabmanViewController, ViewConfig {
         addBar(bar, dataSource: self, at: .top)
         
         bar.layer.addEdgeBorder([.bottom], color: .coinParrotGray, width: 1)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
     }
 }
 

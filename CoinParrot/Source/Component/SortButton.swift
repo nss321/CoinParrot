@@ -34,8 +34,6 @@ final class SortButton: UIButton, ViewConfig {
         return view
     }()
     
-    let labelHeight = ("1" as NSString).size(withAttributes: [ .font : UIFont.boldSystemFont(ofSize: 12)]).height
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configLayout()
@@ -75,7 +73,6 @@ final class SortButton: UIButton, ViewConfig {
         }
     }
     
-    func configView() {
-    }
+    func configView() { }
     
 }

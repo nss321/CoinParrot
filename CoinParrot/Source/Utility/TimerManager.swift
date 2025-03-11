@@ -22,7 +22,6 @@ final class TimerManager {
         marketListTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         
         marketListTimer?.setEventHandler {
-            // TODO: market list 네트워크 요청
             NetworkManager.shared.fetchMarketData()
             DispatchQueue.global().asyncAfter(deadline: .now()+1) {
                 NotificationCenter.default.post(name: Notification.Name("market"), object: nil)

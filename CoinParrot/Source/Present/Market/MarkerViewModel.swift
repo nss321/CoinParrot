@@ -19,8 +19,9 @@ final class MarkerViewModel: ViewModel {
     }
     
     struct Output {
-        let mockDataSource: Driver<[MarketData]>
+        let dataSource: Driver<[MarketData]>
         let output: Driver<String>
+        let scrollToTop: Driver<Void>
     }
     
     var disposeBag = DisposeBag()
@@ -28,11 +29,13 @@ final class MarkerViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let marketList = BehaviorRelay(value: [MarketData]())
         let test = PublishRelay<String>()
+        let scrollToTop = PublishRelay<Void>()
         
         input.sortByPriceButtonTap
             .bind(with: self) { owner, _ in
                 SortManager.shared.updateType(current: .price)
                 marketList.accept(owner.sort(origin: marketList.value))
+                scrollToTop.accept(())
                 test.accept(SortManager.shared.current())
             }
             .disposed(by: disposeBag)
@@ -41,6 +44,7 @@ final class MarkerViewModel: ViewModel {
             .bind(with: self) { owner, _ in
                 SortManager.shared.updateType(current: .change)
                 marketList.accept(owner.sort(origin: marketList.value))
+                scrollToTop.accept(())
                 test.accept(SortManager.shared.current())
             }
             .disposed(by: disposeBag)
@@ -49,6 +53,7 @@ final class MarkerViewModel: ViewModel {
             .bind(with: self) { owner, _ in
                 SortManager.shared.updateType(current: .amount)
                 marketList.accept(owner.sort(origin: marketList.value))
+                scrollToTop.accept(())
                 test.accept(SortManager.shared.current())
             }
             .disposed(by: disposeBag)
@@ -80,8 +85,9 @@ final class MarkerViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            mockDataSource: marketList.asDriver(),
-            output: test.asDriver(onErrorDriveWith: .empty())
+            dataSource: marketList.asDriver(),
+            output: test.asDriver(onErrorDriveWith: .empty()),
+            scrollToTop: scrollToTop.asDriver(onErrorDriveWith: .empty())
         )
     }
     

@@ -17,15 +17,11 @@ final class CoinInformationViewModel: ViewModel {
     }
     
     struct Output {
-        let mockDataSource: Driver<[TrendingHeader]>
-        let output: Driver<String>
+        let dataSource: Driver<[TrendingHeader]>
+        let searchKeyword: Driver<String>
     }
     
     var disposeBag = DisposeBag()
-    
-    init() {
-
-    }
     
     func transform(input: Input) -> Output {
         let test = PublishRelay<String>()
@@ -74,8 +70,6 @@ final class CoinInformationViewModel: ViewModel {
                 switch valid {
                 case .empty:
                     AlertManager.shared.showSimpleAlert(title: "검색어", message: KeywordValidation.empty.message)
-//                case .short:
-//                    AlertManager.shared.showSimpleAlert(title: "검색어", message: KeywordValidation.short.message)
                 case .valid:
                     isValid.accept(())
                 }
@@ -88,8 +82,8 @@ final class CoinInformationViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            mockDataSource: trendHeader.asDriver(),
-            output: test.asDriver(onErrorDriveWith: .empty())
+            dataSource: trendHeader.asDriver(),
+            searchKeyword: test.asDriver(onErrorDriveWith: .empty())
         )
     }
     

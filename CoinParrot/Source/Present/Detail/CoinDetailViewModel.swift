@@ -43,6 +43,33 @@ final class CoinDetailViewModel: ViewModel {
                 }
             }
             .disposed(by: disposeBag)
+
+//        var count = 0
+        
+//        let test: Observable<[CoinDetail]> = NetworkManager.shared.callRequest(api: .detail(coinId), type: [CoinDetail].self)
+//                
+//        test
+//            .observe(on: MainScheduler.asyncInstance)
+//            .retry { error in
+//                error.enumerated()
+//                    .flatMap { count, error -> Observable<Void> in
+//                        guard count < 3 else { throw error }
+//                        return Observable<Void>.just(())
+//                            .delay(.seconds(1), scheduler: MainScheduler.asyncInstance)
+//                    }
+//            }
+//            .subscribe(with: self) { owenr, value in
+//                coinDetail.accept(value)
+//            } onError: { owner, error in
+//                let apiError = error as! APIError
+//                AlertManager.shared.showSimpleAlert(title: "네트워크 에러", message: apiError.rawValue)
+//            } onCompleted: { owner in
+//                print("completer")
+//            } onDisposed: { owner in
+//                print("disposed")
+//            }
+//            .disposed(by: disposeBag)
+
         
         return Output(
             coinDetailInformation: coinDetail.asDriver()

@@ -15,22 +15,30 @@ final class SearchCoinViewModel: ViewModel {
     
     struct Output {
         let result: Driver<[SearchCoin]>
+        let emptyResult: Driver<Void>
     }
     
     var disposeBag = DisposeBag()
 
-    let result = BehaviorRelay(value: [SearchCoin]())
+    let result = PublishRelay<[SearchCoin]>()
     
     func transform(input: Input) -> Output {
-
-        let coinList = BehaviorRelay(value: [SearchCoin]())
+        let coinList = PublishRelay<[SearchCoin]>()
+        let emptyResult = PublishRelay<Void>()
 
         result
-            .bind(to: coinList)
+            .bind(with: self) { owner, value in
+                if value.isEmpty {
+                    emptyResult.accept(())
+                } else {
+                    coinList.accept(value)
+                }
+            }
             .disposed(by: disposeBag)
         
         return Output(
-            result: coinList.asDriver()
+            result: coinList.asDriver(onErrorDriveWith: .empty()),
+            emptyResult: emptyResult.asDriver(onErrorDriveWith: .empty())
         )
     }
     

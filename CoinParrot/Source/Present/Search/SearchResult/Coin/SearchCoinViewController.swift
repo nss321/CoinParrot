@@ -30,6 +30,10 @@ final class SearchCoinViewController: BaseViewController {
     
     private(set) var viewModel = SearchCoinViewModel()
     
+    deinit {
+        print("searchview deinit")
+    }
+    
     override func bind() {
         let input = SearchCoinViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -48,6 +52,15 @@ final class SearchCoinViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+//        output
+//            .emptyResult
+//            .drive(with: self) { owner, _ in
+//                owner.collectionView.isHidden = true
+//                owner.label.isHidden = false
+//            }
+//            .disposed(by: disposeBag)
+
     }
     
     override func configLayout() {
@@ -64,6 +77,7 @@ final class SearchCoinViewController: BaseViewController {
     }
     
     override func configView() {
+        navigationItem.backButtonTitle = ""
         navigationItem.searchController = UISearchController()
     }
 }
