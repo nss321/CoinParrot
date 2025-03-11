@@ -58,8 +58,6 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private let formatter = NumberFormatManager.shared
-    
     override func configLayout() {
         [imageView, titleLabel, priceLabel, changesContainer].forEach { contentView.addSubview($0) }
         
@@ -114,23 +112,23 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
         
         priceLabel.text = item.data.floorPrice
         
-        changesLabel.text = formatter.roundedNumeric(number: item.floorPrice24hPercentageChange)
+        changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: item.floorPrice24hPercentageChange)
         
         let changes = item.floorPrice24hPercentageChange
         
         if changes < 0 {
             changesLabel.textColor = .coinParrotBlue
             changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.down.fill")?.withTintColor(.coinParrotBlue, renderingMode: .alwaysOriginal)
-            changesLabel.text = formatter.roundedNumeric(number: -changes) + "%"
+            changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: -changes) + "%"
             
         } else if changes > 0 {
             changesLabel.textColor = .coinParrotRed
             changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.up.fill")?.withTintColor(.coinParrotRed, renderingMode: .alwaysOriginal)
-            changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
+            changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: changes) + "%"
             
         } else {
             changesLabel.textColor = .coinParrotNavy
-            changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
+            changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: changes) + "%"
         }
     }
 }

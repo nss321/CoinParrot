@@ -52,7 +52,6 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private let formatter = NumberFormatManager.shared
     
     override func configLayout() {
         [indexLabel, coinImageView, titleLabel, subTitleLabel, changesSymbolImageView, changesLabel].forEach { contentView.addSubview($0) }
@@ -121,16 +120,16 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
             if changes < 0 {
                 changesLabel.textColor = .coinParrotBlue
                 changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.down.fill")?.withTintColor(.coinParrotBlue, renderingMode: .alwaysOriginal)
-                changesLabel.text = formatter.roundedNumeric(number: -changes) + "%"
+                changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: -changes) + "%"
                 
             } else if changes > 0 {
                 changesLabel.textColor = .coinParrotRed
                 changesSymbolImageView.image = UIImage(systemName: "arrowtriangle.up.fill")?.withTintColor(.coinParrotRed, renderingMode: .alwaysOriginal)
-                changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
+                changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: changes) + "%"
                 
             } else {
                 changesLabel.textColor = .coinParrotNavy
-                changesLabel.text = formatter.roundedNumeric(number: changes) + "%"
+                changesLabel.text = NumberFormatManager.shared.roundedNumeric(number: changes) + "%"
             }
         }
     }

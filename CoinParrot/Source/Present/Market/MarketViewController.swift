@@ -28,18 +28,21 @@ final class MarketViewController:  BaseViewController {
         output.output
             .drive(with: self) { owner, state in
                 print(state)
-                // 버튼 UI 변경
-                
             }
             .disposed(by: disposeBag)
         
         
-        output.mockDataSource
+        output.dataSource
             .drive(collectionView.rx.items(cellIdentifier: MarketCollectionViewCell.id, cellType: MarketCollectionViewCell.self)) { _, element, cell in
                 cell.config(item: element)
             }
             .disposed(by: disposeBag)
         
+        output.scrollToTop
+            .drive(with: self) { owner, _ in
+                owner.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+            .disposed(by: disposeBag)
         
     }
     
@@ -61,14 +64,6 @@ final class MarketViewController:  BaseViewController {
     override func configView() {
         navigationItem.setLeftBarButton(UIBarButtonItem(customView: UILabel.marketNavLabel()), animated: false)
         collectionView.register(MarketCollectionViewCell.self, forCellWithReuseIdentifier: MarketCollectionViewCell.id)
-        hasDecimalPlaces(number: 29822485605.47842841)
-        print(NumberFormatManager.shared.roundedNumeric(number: 806.0000000))
-    }
-    
-    private func hasDecimalPlaces(number: Double) {
-        let number = String(number)
-        let pointIndex = number.firstIndex(of: ".")!
-        print(number[pointIndex...])
     }
 }
 

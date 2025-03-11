@@ -31,4 +31,30 @@ final class NumberFormatManager {
         let roundedNumber = round(number * digit) / digit
         return String(roundedNumber)
     }
+    
+    func checkNumber(number: Double) -> String {
+        if hasDecimalPlaces(number: number) {
+            return roundedNumeric(number: number)
+        } else {
+            return commaNumber(number: number)
+        }
+    }
+    
+    func hasDecimalPlaces(number: Double) -> Bool {
+        let number = String(number)
+        
+        if let pointIndex = number.firstIndex(of: ".") {
+            if number[pointIndex...] == ".0" {
+                // 소수점 없는 숫자 -> comma
+                return false
+            } else {
+                // 소수점 있는 숫자 -> round
+                return true
+            }
+        } else {
+            print("unexpected nil founded")
+            print(number)
+            return false
+        }
+    }
 }

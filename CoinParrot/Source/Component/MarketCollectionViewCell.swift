@@ -48,8 +48,6 @@ final class MarketCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private let formatter = NumberFormatManager.shared
-    
     override func configLayout() {
         [nameLabel, priceLabel, changesPercentageLabel, changesAmountLabel, amountLabel].forEach { contentView.addSubview($0) }
         
@@ -85,7 +83,7 @@ final class MarketCollectionViewCell: BaseCollectionViewCell {
         nameLabel.text = "\(coinName[1])/\(coinName[0])"
         
         // 현재가
-        priceLabel.text = checkNumber(number: item.tradePrice)
+        priceLabel.text = NumberFormatManager.shared.checkNumber(number: item.tradePrice)
         
         // 전일대비 금액, 퍼센티지
         switch item.change {
@@ -101,35 +99,10 @@ final class MarketCollectionViewCell: BaseCollectionViewCell {
             changesAmountLabel.textColor = .coinParrotNavy
         }
         changesPercentageLabel.text = NumberFormatManager.shared.roundedNumeric(number: item.signedChangeRate*100) + "%"
-        changesAmountLabel.text = checkNumber(number: item.signedChangePrice)
+        changesAmountLabel.text = NumberFormatManager.shared.checkNumber(number: item.signedChangePrice)
 
         // 거래대금
         amountLabel.text = NumberFormatManager.shared.commaNumber(number: item.accTradePrice24h/1000000) + "백만"
     }
     
-    private func checkNumber(number: Double) -> String {
-        if hasDecimalPlaces(number: number) {
-            return NumberFormatManager.shared.roundedNumeric(number: number)
-        } else {
-            return NumberFormatManager.shared.commaNumber(number: number)
-        }
-    }
-    
-    private func hasDecimalPlaces(number: Double) -> Bool {
-        let number = String(number)
-        
-        if let pointIndex = number.firstIndex(of: ".") {
-            if number[pointIndex...] == ".0" {
-                // 소수점 없는 숫자 -> comma
-                return false
-            } else {
-                // 소수점 있는 숫자 -> round
-                return true
-            }
-        } else {
-            print("unexpected nil founded")
-            print(number)
-            return false
-        }
-    }
 }
