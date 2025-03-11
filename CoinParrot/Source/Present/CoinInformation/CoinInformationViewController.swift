@@ -64,20 +64,35 @@ final class CoinInformationViewController: BaseViewController {
 
     
     private let dataSource = RxCollectionViewSectionedReloadDataSource<TrendingHeader> { _, collectionView, indexPath, item in
+        
         switch item {
+            
         case .coin(let trendingCoin):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCoinCollectionViewCell.id, for: indexPath) as! TrendingCoinCollectionViewCell
             cell.config(item: trendingCoin, index: indexPath.item+1)
             return cell
+            
         case .nft(let trendingNft):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingNFTCollectionViewCell.id, for: indexPath) as! TrendingNFTCollectionViewCell
             cell.config(item: trendingNft)
             return cell
+            
         }
+        
     } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+        
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrendingCollectionViewHeader.id, for: indexPath) as! TrendingCollectionViewHeader
-        header.config(title: dataSource.sectionModels[indexPath.section].title, subTitle: dataSource.sectionModels[indexPath.section].subTitle)
+        
+        if let responseDate = dataSource.sectionModels[indexPath.section].subTitle {
+            let convertedDate = DateManager.shared.trendingDateToString(date: responseDate)
+            header.config(title: dataSource.sectionModels[indexPath.section].title, subTitle: convertedDate)
+            
+        } else {
+            header.config(title: dataSource.sectionModels[indexPath.section].title, subTitle: nil)
+        }
+        
         return header
+        
     }
     
     private let viewModel = CoinInformationViewModel()
@@ -92,7 +107,7 @@ final class CoinInformationViewController: BaseViewController {
         
         let output = viewModel.transform(input: input)
         
-        output.output
+        output.searchKeyword
             .drive(with: self) { owner, text in
                 print(text)
                 let vc = SearchTabViewController(viewModel: SearchTabViewModel(keyword: text))
@@ -103,7 +118,7 @@ final class CoinInformationViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.mockDataSource
+        output.dataSource
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
