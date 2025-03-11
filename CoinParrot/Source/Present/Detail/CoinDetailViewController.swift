@@ -336,7 +336,7 @@ final class CoinDetailViewController: BaseViewController {
         
         charts.snp.makeConstraints {
             $0.top.equalTo(changePercentageLabel.snp.bottom).offset(smallMargin)
-            $0.horizontalEdges.equalToSuperview().inset(largeMargin)
+            $0.horizontalEdges.equalToSuperview().inset(smallMargin)
             $0.height.equalTo(screenHeight/3)
         }
         
@@ -498,23 +498,23 @@ final class CoinDetailViewController: BaseViewController {
 private extension CoinDetailViewController {
     func updateView(item: CoinDetail) {
         
-        currentPrice.text = "₩" + checkNumber(number: item.currentPrice)
+        currentPrice.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.currentPrice)
         
         if let changes = item.priceChangePercentage24h {
             
             if changes < 0 {
                 changePercentageLabel.textColor = .coinParrotBlue
                 changePercentageImageView.image = UIImage(systemName: "arrowtriangle.down.fill")?.withTintColor(.coinParrotBlue, renderingMode: .alwaysOriginal)
-                changePercentageLabel.text = checkNumber(number: -changes) + "%"
+                changePercentageLabel.text = NumberFormatManager.shared.checkNumber(number: -changes) + "%"
                 
             } else if changes > 0 {
                 changePercentageLabel.textColor = .coinParrotRed
                 changePercentageImageView.image = UIImage(systemName: "arrowtriangle.up.fill")?.withTintColor(.coinParrotRed, renderingMode: .alwaysOriginal)
-                changePercentageLabel.text = checkNumber(number: changes) + "%"
+                changePercentageLabel.text = NumberFormatManager.shared.checkNumber(number: changes) + "%"
                 
             } else {
                 changePercentageLabel.textColor = .coinParrotNavy
-                changePercentageLabel.text = checkNumber(number: changes) + "%"
+                changePercentageLabel.text = NumberFormatManager.shared.checkNumber(number: changes) + "%"
                 changePercentageLabel.snp.remakeConstraints {
                     $0.top.equalTo(currentPrice.snp.bottom)
                     $0.leading.equalToSuperview().inset(largeMargin)
@@ -529,26 +529,25 @@ private extension CoinDetailViewController {
             configChart(rawData: chartData)
         }
         
+        timeStampLabel.text = DateManager.shared.iso8601ToString(date: item.lastUpdated)
         
-        timeStampLabel.text = item.lastUpdated
+        highPrice24hContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.high24h ?? 0)
         
-        highPrice24hContentLabel.text = "₩" + checkNumber(number: item.high24h ?? 0)
+        lowPrice24hContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.low24h ?? 0)
         
-        lowPrice24hContentLabel.text = "₩" + checkNumber(number: item.low24h ?? 0)
-        
-        allTimeHighPriceContentLabel.text = "₩" + checkNumber(number: item.ath)
+        allTimeHighPriceContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.ath)
         
         athTimeStampLabel.text = item.athDate
         
-        allTimeLowPriceContentLabel.text = "₩" + checkNumber(number: item.atl)
+        allTimeLowPriceContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.atl)
         
         atlTimeStampLabel.text = item.atlDate
         
-        marketCapContentLabel.text = "₩" + checkNumber(number: item.marketCap)
+        marketCapContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.marketCap)
         
-        fullyDilutedValuationContentLabel.text = "₩" +  checkNumber(number: item.fullyDilutedValuation ?? 0)
+        fullyDilutedValuationContentLabel.text = "₩" +  NumberFormatManager.shared.checkNumber(number: item.fullyDilutedValuation ?? 0)
         
-        totalVolumeContentLabel.text = "₩" + checkNumber(number: item.totalVolume)
+        totalVolumeContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.totalVolume)
     }
     
     func configChart(rawData: [Double]) {
@@ -605,32 +604,6 @@ private extension CoinDetailViewController {
         } else {
             print("coin symbol image url is nil")
             symbol.image = UIImage(systemName: "xmark")?.withTintColor(.coinParrotGray, renderingMode: .alwaysOriginal)
-        }
-    }
-    
-    func checkNumber(number: Double) -> String {
-        if hasDecimalPlaces(number: number) {
-            return NumberFormatManager.shared.roundedNumeric(number: number)
-        } else {
-            return NumberFormatManager.shared.commaNumber(number: number)
-        }
-    }
-    
-    func hasDecimalPlaces(number: Double) -> Bool {
-        let number = String(number)
-        
-        if let pointIndex = number.firstIndex(of: ".") {
-            if number[pointIndex...] == ".0" {
-                // 소수점 없는 숫자 -> comma
-                return false
-            } else {
-                // 소수점 있는 숫자 -> round
-                return true
-            }
-        } else {
-            print("unexpected nil founded")
-            print(number)
-            return false
         }
     }
 }
