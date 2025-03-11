@@ -111,7 +111,10 @@ final class CoinInformationViewController: BaseViewController {
             .bind(with: self) { owner, trending in
                 switch trending {
                 case .coin(let coin):
-                    print(coin)
+                    print(coin.id, "상세 정보를 불러 옵니다.")
+                    let viewModel = CoinDetailViewModel(coinId: coin.id)
+                    let vc = CoinDetailViewController(viewModel: viewModel)
+                    owner.navigationController?.pushViewController(vc, animated: true)
                 case .nft(let nft):
                     print(nft)
                 }

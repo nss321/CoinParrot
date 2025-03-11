@@ -117,14 +117,19 @@ final class MarketCollectionViewCell: BaseCollectionViewCell {
     
     private func hasDecimalPlaces(number: Double) -> Bool {
         let number = String(number)
-        let pointIndex = number.firstIndex(of: ".")!
         
-        if number[pointIndex...] == ".0" {
-            // 소수점 없는 숫자 -> comma
-            return false
+        if let pointIndex = number.firstIndex(of: ".") {
+            if number[pointIndex...] == ".0" {
+                // 소수점 없는 숫자 -> comma
+                return false
+            } else {
+                // 소수점 있는 숫자 -> round
+                return true
+            }
         } else {
-            // 소수점 있는 숫자 -> round
-            return true
+            print("unexpected nil founded")
+            print(number)
+            return false
         }
     }
 }
