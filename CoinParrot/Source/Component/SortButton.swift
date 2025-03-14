@@ -11,8 +11,6 @@ import SnapKit
 
 final class SortButton: UIButton, ViewConfig {
     
-    var type: SortType?
-    
     let title = {
         let label = UILabel()
         label.font = .boldPrimary()
@@ -44,10 +42,9 @@ final class SortButton: UIButton, ViewConfig {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(title: String, type: SortType) {
+    convenience init(title: String) {
         self.init()
         self.title.text = title
-        self.type = type
     }
     
     func configLayout() {

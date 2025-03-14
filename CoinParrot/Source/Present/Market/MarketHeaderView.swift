@@ -19,9 +19,10 @@ final class MarketHeaderView: BaseView {
         label.textAlignment = .left
         return label
     }()
-    let sortByPriceButton = SortButton(title: "현재가", type: .price)
-    let sortByChangesButton = SortButton(title: "전일대비", type: .change)
-    let sortByAmountButton = SortButton(title: "거래대금", type: .amount)
+    
+    let sortByPriceButton = SortButton(title: "현재가")
+    let sortByChangesButton = SortButton(title: "전일대비")
+    let sortByAmountButton = SortButton(title: "거래대금")
     
     override func configLayout() {
         [coinNameColumnLabel, sortByPriceButton, sortByChangesButton, sortByAmountButton]
