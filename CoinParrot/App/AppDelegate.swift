@@ -21,10 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// 20
     var largeMargin: Int { 20 }
     
-    var screenWidth: CGFloat { UIScreen.main.bounds.width }
+    var screenWidth: CGFloat {
+        guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            fatalError()
+        }
+        return window.screen.bounds.width
+    }
     
-    var screenHeight: CGFloat { UIScreen.main.bounds.height }
-    
+    var screenHeight: CGFloat {
+        guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            fatalError()
+        }
+        return window.screen.bounds.height
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

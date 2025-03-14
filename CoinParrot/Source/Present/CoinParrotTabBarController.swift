@@ -17,7 +17,7 @@ final class CoinParrotTabBarController: UITabBarController {
         super.viewDidLoad()
         configTabBar()
         setupTabbarAppearance()
-        print(realm.configuration.fileURL)
+        print(realm.configuration.fileURL ?? "cannot find realm path")
     }
     
     func configTabBar() {
