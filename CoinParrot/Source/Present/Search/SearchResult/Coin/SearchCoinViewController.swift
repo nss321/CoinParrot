@@ -12,6 +12,8 @@ import SnapKit
 
 final class SearchCoinViewController: BaseViewController {
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     // TODO: 검색 결과 없을때 띄우기
     private let label = {
         let label = UILabel()
@@ -85,7 +87,7 @@ final class SearchCoinViewController: BaseViewController {
 private extension SearchCoinViewController {
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: screenWidth, height: 72)
+        layout.itemSize = CGSize(width: appDelegate.screenWidth, height: 72)
         layout.minimumLineSpacing = 0
         return layout
     }

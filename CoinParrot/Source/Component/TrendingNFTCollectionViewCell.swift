@@ -14,6 +14,8 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "TrendingNFTCollectionViewCell"
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     private let imageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -65,12 +67,12 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
         
         imageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(smallMargin)
+            $0.top.equalToSuperview().inset(appDelegate.smallMargin)
             $0.size.equalTo(72)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(smallMargin/2)
+            $0.top.equalTo(imageView.snp.bottom).offset(appDelegate.smallMargin/2)
             $0.horizontalEdges.equalToSuperview()
         }
         
@@ -85,8 +87,8 @@ final class TrendingNFTCollectionViewCell: BaseCollectionViewCell {
         }
         
         changesSymbolImageView.snp.makeConstraints {
-            $0.width.equalTo(mediumMargin/2)
-            $0.height.equalTo(smallMargin)
+            $0.width.equalTo(appDelegate.mediumMargin/2)
+            $0.height.equalTo(appDelegate.smallMargin)
         }
     }
 

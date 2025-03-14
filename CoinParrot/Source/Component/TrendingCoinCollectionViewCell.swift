@@ -14,6 +14,8 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "TrendingCoinCollectionViewCell"
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     private let indexLabel = {
         let label = UILabel()
         label.font = .regularPrimary()
@@ -58,18 +60,18 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
         
         indexLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(largeMargin)
+            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
         }
         
         coinImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(indexLabel.snp.leading).offset(largeMargin)
+            $0.leading.equalTo(indexLabel.snp.leading).offset(appDelegate.largeMargin)
             $0.size.equalTo(26)
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(coinImageView.snp.top)
-            $0.leading.equalTo(coinImageView.snp.trailing).offset(smallMargin/2)
+            $0.leading.equalTo(coinImageView.snp.trailing).offset(appDelegate.smallMargin/2)
             $0.trailing.lessThanOrEqualTo(changesSymbolImageView.snp.leading)
         }
         
@@ -81,14 +83,14 @@ final class TrendingCoinCollectionViewCell: BaseCollectionViewCell {
         
         changesSymbolImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(mediumMargin/2)
-            $0.height.equalTo(smallMargin)
-            $0.trailing.equalTo(changesLabel.snp.leading).offset(-smallMargin/4)
+            $0.width.equalTo(appDelegate.mediumMargin/2)
+            $0.height.equalTo(appDelegate.smallMargin)
+            $0.trailing.equalTo(changesLabel.snp.leading).offset(-appDelegate.smallMargin/4)
         }
         
         changesLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(largeMargin)
+            $0.trailing.equalToSuperview().inset(appDelegate.largeMargin)
         }
     }
 

@@ -34,6 +34,8 @@ enum Trending {
 
 final class CoinInformationViewController: BaseViewController {
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     // MARK: Property
     private lazy var searchBar = {
         let searchBar = UISearchBar()
@@ -135,13 +137,13 @@ final class CoinInformationViewController: BaseViewController {
         [searchBar, collectionView].forEach { view.addSubview($0) }
     
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(largeMargin)
-            $0.horizontalEdges.equalToSuperview().inset(largeMargin)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(appDelegate.largeMargin)
+            $0.horizontalEdges.equalToSuperview().inset(appDelegate.largeMargin)
             $0.height.equalTo(44)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(largeMargin)
+            $0.top.equalTo(searchBar.snp.bottom).offset(appDelegate.largeMargin)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
@@ -186,11 +188,11 @@ private extension CoinInformationViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
                 /// cellWidth + spacing + margin
-                let groupWidth = 72 * 7 + 6 * self!.smallMargin + 2 * self!.largeMargin
+                let groupWidth = 72 * 7 + 6 * self!.appDelegate.smallMargin + 2 * self!.appDelegate.largeMargin
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(CGFloat(groupWidth)), heightDimension: .absolute(132))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                group.interItemSpacing = .fixed(CGFloat(self!.smallMargin))
-                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: CGFloat(self!.largeMargin), bottom: 0, trailing: CGFloat(self!.largeMargin))
+                group.interItemSpacing = .fixed(CGFloat(self!.appDelegate.smallMargin))
+                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: CGFloat(self!.appDelegate.largeMargin), bottom: 0, trailing: CGFloat(self!.appDelegate.largeMargin))
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous

@@ -14,6 +14,8 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "SearchCoinCollectionViewCell"
     
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     private let coinImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -61,13 +63,13 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
         
         coinImageView.snp.makeConstraints{
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(largeMargin)
+            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
             $0.size.equalTo(36)
         }
         
         symbolLabel.snp.makeConstraints{
             $0.top.equalTo(coinImageView.snp.top)
-            $0.leading.equalTo(coinImageView.snp.trailing).offset(mediumMargin)
+            $0.leading.equalTo(coinImageView.snp.trailing).offset(appDelegate.mediumMargin)
         }
         
         nameLabel.snp.makeConstraints{
@@ -83,7 +85,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
         
         starButton.snp.makeConstraints{
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(largeMargin)
+            $0.trailing.equalToSuperview().inset(appDelegate.largeMargin)
         }
     }
 
@@ -114,7 +116,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell {
         rankLabel.snp.remakeConstraints {
             $0.top.equalTo(symbolLabel.snp.top)
             $0.height.equalTo(symbolLabel.intrinsicContentSize.height)
-            $0.leading.equalTo(symbolLabel.snp.trailing).offset(smallMargin/2)
+            $0.leading.equalTo(symbolLabel.snp.trailing).offset(appDelegate.smallMargin/2)
         }
         
         starButton.bind(viewModel: StarButtonViewModel(item: LikedCoin(id: item.id)))

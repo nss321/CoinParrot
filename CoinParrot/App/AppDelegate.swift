@@ -10,6 +10,22 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    // MARK: Global
+    
+    /// 12
+    var smallMargin: Int { 12 }
+    
+    /// 16
+    var mediumMargin: Int { 16 }
+    
+    /// 20
+    var largeMargin: Int { 20 }
+    
+    var screenWidth: CGFloat { UIScreen.main.bounds.width }
+    
+    var screenHeight: CGFloat { UIScreen.main.bounds.height }
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UITabBar.appearance().tintColor = .coinParrotNavy

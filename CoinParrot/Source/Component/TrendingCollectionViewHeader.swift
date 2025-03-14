@@ -28,6 +28,8 @@ final class TrendingCollectionViewHeader: UICollectionReusableView, ViewConfig {
         label.textAlignment = .right
         return label
     }()
+    
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,12 +46,12 @@ final class TrendingCollectionViewHeader: UICollectionReusableView, ViewConfig {
         
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(largeMargin)
+            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
         }
         
         subTitleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(largeMargin)
+            $0.trailing.equalToSuperview().inset(appDelegate.largeMargin)
         }
     }
     
