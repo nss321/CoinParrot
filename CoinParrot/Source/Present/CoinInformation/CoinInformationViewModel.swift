@@ -88,9 +88,16 @@ final class CoinInformationViewModel: ViewModel {
     }
     
     private func modifyResponse(response: TrendingResponse) -> [TrendingHeader] {
-        // TODO: DateManager 만들어서 날짜 데이터 가공해야함
-        let coinSection = TrendingHeader(title: "인기 검색어", subTitle: "\(Date.now)", items: response.coins[0...13].map { Trending.coin($0.item) })
-        let nftSection = TrendingHeader(title: "인기 NFT", subTitle: nil, items: response.nfts.map { Trending.nft($0) })
+        let coinSection = TrendingHeader(
+            title: "인기 검색어",
+            subTitle: DateManager.shared.nowDate(),
+            items: response.coins[0...13].map { Trending.coin($0.item) })
+        
+        let nftSection = TrendingHeader(
+            title: "인기 NFT",
+            subTitle: nil,
+            items: response.nfts.map { Trending.nft($0) })
+        
         return [coinSection, nftSection]
     }
 }

@@ -83,14 +83,8 @@ final class CoinInformationViewController: BaseViewController {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrendingCollectionViewHeader.id, for: indexPath) as! TrendingCollectionViewHeader
         
-        if let responseDate = dataSource.sectionModels[indexPath.section].subTitle {
-            let convertedDate = DateManager.shared.trendingDateToString(date: responseDate)
-            header.config(title: dataSource.sectionModels[indexPath.section].title, subTitle: convertedDate)
-            
-        } else {
-            header.config(title: dataSource.sectionModels[indexPath.section].title, subTitle: nil)
-        }
-        
+        header.config(dataSource: dataSource.sectionModels[indexPath.section])
+
         return header
         
     }

@@ -49,12 +49,8 @@ final class DateManager {
         }
     }
     
-    func trendingDateToString(date: String?) -> String {
-        if let date = date, let date = responseTrendingDateFormatter.date(from: date) {
-            return trendingDataFormatter.string(from: date)
-        } else {
-            return "날짜를 불러올 수 없습니다."
-        }
+    func nowDate() -> String {
+        return trendingDataFormatter.string(from: .now)
     }
 
 }

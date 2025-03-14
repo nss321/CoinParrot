@@ -54,10 +54,10 @@ final class TrendingCollectionViewHeader: UICollectionReusableView, ViewConfig {
     }
     
     func configView() { }
-
-    func config(title: String, subTitle: String? = nil) {
-        titleLabel.text = title
-        subTitleLabel.text = subTitle
+    
+    func config(dataSource: TrendingHeader) {
+        titleLabel.text = dataSource.title
+        subTitleLabel.text = dataSource.subTitle
     }
     
 }
