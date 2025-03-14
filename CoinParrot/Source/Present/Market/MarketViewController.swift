@@ -25,7 +25,7 @@ final class MarketViewController:  BaseViewController {
             sortByAmountButtonTap: header.sortByAmountButton.rx.tap)
         let output = viewModel.transform(input: input)
         
-        output.output
+        output.currentSortState
             .drive(with: self) { owner, state in
                 print(state)
             }

@@ -20,7 +20,7 @@ final class MarkerViewModel: ViewModel {
     
     struct Output {
         let dataSource: Driver<[MarketData]>
-        let output: Driver<String>
+        let currentSortState: Driver<String>
         let scrollToTop: Driver<Void>
     }
     
@@ -28,7 +28,7 @@ final class MarkerViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         let marketList = BehaviorRelay(value: [MarketData]())
-        let test = PublishRelay<String>()
+        let currentSortState = PublishRelay<String>()
         let scrollToTop = PublishRelay<Void>()
         
         input.sortByPriceButtonTap
@@ -36,7 +36,7 @@ final class MarkerViewModel: ViewModel {
                 SortManager.shared.updateType(current: .price)
                 marketList.accept(owner.sort(origin: marketList.value))
                 scrollToTop.accept(())
-                test.accept(SortManager.shared.current())
+                currentSortState.accept(SortManager.shared.current())
             }
             .disposed(by: disposeBag)
         
@@ -45,7 +45,7 @@ final class MarkerViewModel: ViewModel {
                 SortManager.shared.updateType(current: .change)
                 marketList.accept(owner.sort(origin: marketList.value))
                 scrollToTop.accept(())
-                test.accept(SortManager.shared.current())
+                currentSortState.accept(SortManager.shared.current())
             }
             .disposed(by: disposeBag)
         
@@ -54,7 +54,7 @@ final class MarkerViewModel: ViewModel {
                 SortManager.shared.updateType(current: .amount)
                 marketList.accept(owner.sort(origin: marketList.value))
                 scrollToTop.accept(())
-                test.accept(SortManager.shared.current())
+                currentSortState.accept(SortManager.shared.current())
             }
             .disposed(by: disposeBag)
         
@@ -86,7 +86,7 @@ final class MarkerViewModel: ViewModel {
         
         return Output(
             dataSource: marketList.asDriver(),
-            output: test.asDriver(onErrorDriveWith: .empty()),
+            currentSortState: currentSortState.asDriver(onErrorDriveWith: .empty()),
             scrollToTop: scrollToTop.asDriver(onErrorDriveWith: .empty())
         )
     }

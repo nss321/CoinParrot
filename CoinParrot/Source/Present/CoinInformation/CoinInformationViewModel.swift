@@ -24,7 +24,7 @@ final class CoinInformationViewModel: ViewModel {
     var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        let test = PublishRelay<String>()
+        let searchKeyword = PublishRelay<String>()
         let isValid = PublishRelay<Void>()
         let trendHeader = BehaviorRelay(value: [TrendingHeader]())
         
@@ -78,12 +78,12 @@ final class CoinInformationViewModel: ViewModel {
         
         isValid
             .withLatestFrom(input.searchBarText.orEmpty)
-            .bind(to: test)
+            .bind(to: searchKeyword)
             .disposed(by: disposeBag)
         
         return Output(
             dataSource: trendHeader.asDriver(),
-            searchKeyword: test.asDriver(onErrorDriveWith: .empty())
+            searchKeyword: searchKeyword.asDriver(onErrorDriveWith: .empty())
         )
     }
     
