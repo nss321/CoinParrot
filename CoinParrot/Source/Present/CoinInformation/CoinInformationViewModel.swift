@@ -14,11 +14,13 @@ final class CoinInformationViewModel: ViewModel {
     struct Input {
         let searchButtonClicked: ControlEvent<Void>
         let searchBarText: ControlProperty<String?>
+        let collectionViewModelSelect: ControlEvent<Trending>
     }
     
     struct Output {
         let dataSource: Driver<[TrendingHeader]>
         let searchKeyword: Driver<String>
+        let selectedModel: Driver<Trending>
     }
     
     var disposeBag = DisposeBag()
@@ -27,6 +29,7 @@ final class CoinInformationViewModel: ViewModel {
         let searchKeyword = PublishRelay<String>()
         let isValid = PublishRelay<Void>()
         let trendHeader = BehaviorRelay(value: [TrendingHeader]())
+        let selectedModel = PublishRelay<Trending>()
         
         // 뷰 진입시 캐시에서 데이터를 꺼내옴.
         Observable.just(())
@@ -81,9 +84,16 @@ final class CoinInformationViewModel: ViewModel {
             .bind(to: searchKeyword)
             .disposed(by: disposeBag)
         
+        input.collectionViewModelSelect
+            .bind(with: self) { owner, trending in
+                selectedModel.accept(trending)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             dataSource: trendHeader.asDriver(),
-            searchKeyword: searchKeyword.asDriver(onErrorDriveWith: .empty())
+            searchKeyword: searchKeyword.asDriver(onErrorDriveWith: .empty()),
+            selectedModel: selectedModel.asDriver(onErrorDriveWith: .empty())
         )
     }
     

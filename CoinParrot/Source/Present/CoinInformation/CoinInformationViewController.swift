@@ -98,7 +98,8 @@ final class CoinInformationViewController: BaseViewController {
     override func bind() {
         let input = CoinInformationViewModel.Input(
             searchButtonClicked: searchBar.rx.searchButtonClicked,
-            searchBarText: searchBar.rx.text
+            searchBarText: searchBar.rx.text,
+            collectionViewModelSelect: collectionView.rx.modelSelected(Trending.self)
         )
         
         let output = viewModel.transform(input: input)
@@ -118,8 +119,8 @@ final class CoinInformationViewController: BaseViewController {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        collectionView.rx.modelSelected(Trending.self)
-            .bind(with: self) { owner, trending in
+        output.selectedModel
+            .drive(with: self) { owner, trending in
                 switch trending {
                 case .coin(let coin):
                     print(coin.id, "상세 정보를 불러 옵니다.")
