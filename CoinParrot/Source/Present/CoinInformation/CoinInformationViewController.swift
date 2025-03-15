@@ -107,7 +107,8 @@ final class CoinInformationViewController: BaseViewController {
         output.searchKeyword
             .drive(with: self) { owner, text in
                 print(text)
-                let vc = SearchTabViewController(viewModel: SearchTabViewModel(keyword: text))
+                let vm = SearchTabViewModel(keyword: text)
+                let vc = SearchTabViewController(viewModel: vm)
                 vc.viewModel.completion = {
                     self.searchBar.text = $0
                 }
@@ -124,8 +125,8 @@ final class CoinInformationViewController: BaseViewController {
                 switch trending {
                 case .coin(let coin):
                     print(coin.id, "상세 정보를 불러 옵니다.")
-                    let viewModel = CoinDetailViewModel(coinId: coin.id)
-                    let vc = CoinDetailViewController(viewModel: viewModel)
+                    let vm = CoinDetailViewModel(coinId: coin.id)
+                    let vc = CoinDetailViewController(viewModel: vm)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .nft(let nft):
                     print(nft)
