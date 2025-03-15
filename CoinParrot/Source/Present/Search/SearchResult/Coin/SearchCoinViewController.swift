@@ -37,17 +37,22 @@ final class SearchCoinViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = SearchCoinViewModel.Input()
+        let input = SearchCoinViewModel.Input(
+            collectionViewModelSelected: collectionView.rx.modelSelected(SearchCoin.self)
+        )
         let output = viewModel.transform(input: input)
         
         output.result
-            .drive(collectionView.rx.items(cellIdentifier: SearchCoinCollectionViewCell.id, cellType: SearchCoinCollectionViewCell.self))  { _, element, cell in
+            .drive(
+                collectionView.rx.items(cellIdentifier: SearchCoinCollectionViewCell.id, cellType: SearchCoinCollectionViewCell.self))  { _, element, cell in
                 cell.config(item: element)
             }
             .disposed(by: disposeBag)
         
-        collectionView.rx.modelSelected(SearchCoin.self)
-            .bind(with: self) { owner, coin in
+        output.selectedModel
+            .drive(with: self) { owner, coin in
+                owner.collectionView.isHidden = false
+                owner.label.isHidden = true
                 print(coin.id, "상세 정보를 불러 옵니다.")
                 let viewModel = CoinDetailViewModel(coinId: coin.id)
                 let vc = CoinDetailViewController(viewModel: viewModel)
@@ -55,13 +60,13 @@ final class SearchCoinViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-//        output
-//            .emptyResult
-//            .drive(with: self) { owner, _ in
-//                owner.collectionView.isHidden = true
-//                owner.label.isHidden = false
-//            }
-//            .disposed(by: disposeBag)
+        
+        output.isEmpty
+            .drive(with: self) { owner, value in
+                owner.collectionView.isHidden = value
+                owner.label.isHidden = !value
+            }
+            .disposed(by: disposeBag)
 
     }
     
