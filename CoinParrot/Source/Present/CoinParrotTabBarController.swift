@@ -18,6 +18,12 @@ final class CoinParrotTabBarController: UITabBarController {
         configTabBar()
         setupTabbarAppearance()
         print(realm.configuration.fileURL ?? "cannot find realm path")
+        
+        if NetworkMonitor.shared.isConnected {
+            print(NetworkMonitor.shared.connectionType)
+        } else {
+            print("네트워크 연결 끊어짐")
+        }
     }
     
     func configTabBar() {

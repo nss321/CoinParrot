@@ -10,6 +10,13 @@ import Network
 
 final class NetworkMonitor {
     
+    enum ConnectionType{
+        case wifi
+        case cellular
+        case ethernet
+        case unknown
+    }
+    
     static let shared = NetworkMonitor()
     
     private lazy var queue = DispatchQueue.global()
@@ -20,19 +27,11 @@ final class NetworkMonitor {
     
     private(set) lazy var connectionType: ConnectionType = .unknown
     
-    // 연결 타입
-    enum ConnectionType{
-        case wifi
-        case cellular
-        case ethernet
-        case unknown
-    }
     
-    // monotior 초기화
     private init() { }
     
-    // Network Monitoring 시작
     public func startMonitoring(){
+        
         monitor.start(queue: queue)
         
         monitor.pathUpdateHandler = { [weak self] path in
@@ -49,13 +48,12 @@ final class NetworkMonitor {
         }
     }
     
-    // Network Monitoring 종료
     public func stopMonitoring(){
         monitor.cancel()
     }
     
-    // Network 연결 타입가져오기.
     private func getConnectionType(_ path: NWPath){
+        
         if path.usesInterfaceType(.wifi){
             connectionType = .wifi
         } else if path.usesInterfaceType(.cellular){
@@ -65,5 +63,6 @@ final class NetworkMonitor {
         } else {
             connectionType = .unknown
         }
+        
     }
 }

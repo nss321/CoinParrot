@@ -32,7 +32,7 @@ final class CoinDetailViewModel: ViewModel {
         
         coinIdRelay
             .flatMap {
-                NetworkManager.shared.callRequest(api: .detail($0), type: [CoinDetail].self)
+                NetworkService.shared.callRequest(api: .detail($0), type: [CoinDetail].self)
             }
             .bind(with: self) { owner, response in
                 switch response {

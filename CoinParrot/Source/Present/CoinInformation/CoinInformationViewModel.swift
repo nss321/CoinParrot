@@ -34,7 +34,7 @@ final class CoinInformationViewModel: ViewModel {
         // 뷰 진입시 캐시에서 데이터를 꺼내옴.
         Observable.just(())
             .flatMap({ _ in
-                NetworkManager.shared.loadTrendingData()
+                NetworkService.shared.loadTrendingData()
             })
             .bind(with: self) { owner, cache in
                 switch cache {
@@ -49,7 +49,7 @@ final class CoinInformationViewModel: ViewModel {
         // 10분마다
         NotificationCenter.default.rx.notification(Notification.Name("trend"))
             .flatMap { _ in
-                NetworkManager.shared.loadTrendingData()
+                NetworkService.shared.loadTrendingData()
             }
             .bind(with: self) { owner, response in
                 print("노티 받음")

@@ -22,7 +22,7 @@ final class TimerManager {
         marketListTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         
         marketListTimer?.setEventHandler {
-            NetworkManager.shared.fetchMarketData()
+            NetworkService.shared.fetchMarketData()
             DispatchQueue.global().asyncAfter(deadline: .now()+1) {
                 NotificationCenter.default.post(name: Notification.Name("market"), object: nil)
             }
@@ -42,7 +42,7 @@ final class TimerManager {
         trendTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         
         trendTimer?.setEventHandler {
-            NetworkManager.shared.fetchTrendingData()
+            NetworkService.shared.fetchTrendingData()
             DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
                 NotificationCenter.default.post(name: Notification.Name("trend"), object: nil)
             }

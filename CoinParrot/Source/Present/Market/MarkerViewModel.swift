@@ -59,7 +59,7 @@ final class MarkerViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         // 빈 화면을 보여주지 않기 위해 최초 1회 실행
-        NetworkManager.shared.callRequest(api: .market, type: [MarketData].self)
+        NetworkService.shared.callRequest(api: .market, type: [MarketData].self)
             .subscribe(with: self) { owner, response in
                 switch response {
                 case .success(let value):
@@ -72,7 +72,7 @@ final class MarkerViewModel: ViewModel {
         
         NotificationCenter.default.rx.notification(Notification.Name("market"))
             .flatMap { _ in
-                NetworkManager.shared.callRequest(api: .market, type: [MarketData].self)
+                NetworkService.shared.callRequest(api: .market, type: [MarketData].self)
             }
             .bind(with: self) { owner, response in
                 switch response {
