@@ -62,7 +62,11 @@ final class SearchTabViewModel: ViewModel {
                 case .empty:
                     AlertManager.shared.showSimpleAlert(title: "검색어", message: KeywordValidation.empty.message)
                 case .valid:
-                    isValid.accept(())
+                    if NetworkMonitor.shared.isConnected {
+                        isValid.accept(())
+                    } else {
+                        AlertManager.shared.showSimpleAlert(title: "네트워크 에러", message: "네트워크 연결이 끊어졌습니다.")
+                    }
                 }
             }
             .disposed(by: disposeBag)
