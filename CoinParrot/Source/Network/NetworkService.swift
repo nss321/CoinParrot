@@ -11,8 +11,8 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-final class NetworkManager {
-    static let shared = NetworkManager()
+final class NetworkService {
+    static let shared = NetworkService()
         
     private init() { }
     
