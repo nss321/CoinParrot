@@ -65,7 +65,7 @@ final class SearchTabViewModel: ViewModel {
                     if NetworkMonitor.shared.isConnected {
                         isValid.accept(())
                     } else {
-                        AlertManager.shared.showSimpleAlert(title: "네트워크 에러", message: "네트워크 연결이 끊어졌습니다.")
+                        AlertManager.shared.networkErrorAlert(type: .loss)
                     }
                 }
             }
