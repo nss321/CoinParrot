@@ -528,7 +528,7 @@ private extension CoinDetailViewController {
             configChart(rawData: chartData)
         }
         
-        timeStampLabel.text = DateManager.shared.iso8601ToString(date: item.lastUpdated)
+        timeStampLabel.text = DateManager.shared.iso8601ToString(date: item.lastUpdated, type: .coinDetailViewChart)
         
         highPrice24hContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.high24h ?? 0)
         
@@ -536,11 +536,11 @@ private extension CoinDetailViewController {
         
         allTimeHighPriceContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.ath)
         
-        athTimeStampLabel.text = item.athDate
+        athTimeStampLabel.text = DateManager.shared.iso8601ToString(date: item.athDate, type: .coinDetailViewAllTime)
         
         allTimeLowPriceContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.atl)
         
-        atlTimeStampLabel.text = item.atlDate
+        atlTimeStampLabel.text = DateManager.shared.iso8601ToString(date: item.atlDate, type: .coinDetailViewAllTime)
         
         marketCapContentLabel.text = "₩" + NumberFormatManager.shared.checkNumber(number: item.marketCap)
         
@@ -557,7 +557,6 @@ private extension CoinDetailViewController {
         rawData.enumerated().forEach {
             if $0 % 4 == 0 { entries.append(ChartDataEntry(x: Double($0), y: $1)) }
         }
-        
         
         // config chart gradient
         let gradientColors = [
