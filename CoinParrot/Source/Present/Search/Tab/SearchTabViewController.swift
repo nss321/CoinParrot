@@ -15,16 +15,14 @@ import Tabman
 
 final class SearchTabViewController: TabmanViewController, ViewConfig {
     
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     private lazy var searchBar = {
         let view = UISearchBar()
         view.text = viewModel.navTitle
         view.searchTextField.font = .systemFont(ofSize: 14)
-        view.frame = CGRect(x: 0, y: 0, width: Int(appDelegate.screenWidth), height: 0)
+        view.frame = CGRect(x: 0, y: 0, width: Int(ScreenSize.screenWidth), height: 0)
         view.searchTextField.leftViewMode = .always
         view.searchTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        view.searchTextPositionAdjustment = .init(horizontal: -CGFloat(appDelegate.smallMargin), vertical: 0)
+        view.searchTextPositionAdjustment = .init(horizontal: -CGFloat(Margin.small), vertical: 0)
         view.searchTextField.backgroundColor = .white
         view.searchTextField.clearButtonMode = .never
         return view

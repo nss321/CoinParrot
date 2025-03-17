@@ -13,9 +13,8 @@ import RxCocoa
 
 final class MarketViewController:  BaseViewController {
     
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     private let header = MarketHeaderView()
+    
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     private let viewModel = MarkerViewModel()
@@ -72,7 +71,7 @@ final class MarketViewController:  BaseViewController {
 private extension MarketViewController {
     func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: appDelegate.screenWidth, height: 44)
+        layout.itemSize = CGSize(width: ScreenSize.screenWidth, height: 44)
         layout.minimumLineSpacing = 0
         return layout
     }

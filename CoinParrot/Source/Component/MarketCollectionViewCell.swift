@@ -13,8 +13,6 @@ final class MarketCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "MarketCollectionViewCell"
     
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     private let nameLabel = {
         let label = UILabel()
         label.font = .boldPrimary()
@@ -55,27 +53,27 @@ final class MarketCollectionViewCell: BaseCollectionViewCell {
         
         nameLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
-            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.leading.equalToSuperview().inset(Margin.large)
         }
         
         priceLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
-            $0.trailing.equalToSuperview().inset(appDelegate.screenWidth*0.5)
+            $0.trailing.equalToSuperview().inset(ScreenSize.screenWidth*0.5)
         }
         
         changesPercentageLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
-            $0.trailing.equalToSuperview().inset(appDelegate.screenWidth*0.3)
+            $0.trailing.equalToSuperview().inset(ScreenSize.screenWidth*0.3)
         }
         
         changesAmountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(1.25)
-            $0.trailing.equalToSuperview().inset(appDelegate.screenWidth*0.3)
+            $0.trailing.equalToSuperview().inset(ScreenSize.screenWidth*0.3)
         }
         
         amountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview().multipliedBy(0.75)
-            $0.trailing.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.trailing.equalToSuperview().inset(Margin.large)
         }
     }
 

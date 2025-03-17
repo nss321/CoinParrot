@@ -10,31 +10,6 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    // MARK: Global
-    
-    /// 12
-    var smallMargin: Int { 12 }
-    
-    /// 16
-    var mediumMargin: Int { 16 }
-    
-    /// 20
-    var largeMargin: Int { 20 }
-    
-    var screenWidth: CGFloat {
-        guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            fatalError()
-        }
-        return window.screen.bounds.width
-    }
-    
-    var screenHeight: CGFloat {
-        guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            fatalError()
-        }
-        return window.screen.bounds.height
-    }
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UITabBar.appearance().tintColor = .coinParrotNavy
@@ -52,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         TimerManager.shared.startMarketListFetchTimer()
         TimerManager.shared.startTrendFetchTimer()
         
-
         return true
     }
 

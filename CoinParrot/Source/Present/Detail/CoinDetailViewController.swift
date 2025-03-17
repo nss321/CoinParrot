@@ -16,8 +16,6 @@ import Toast
 
 final class CoinDetailViewController: BaseViewController {
     
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     // MARK: NavigationBar
     private let customView = {
         let view = UIStackView()
@@ -321,12 +319,12 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         currentPrice.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.leading.equalToSuperview().inset(Margin.large)
         }
         
         changePercentageImageView.snp.makeConstraints {
             $0.top.equalTo(currentPrice.snp.bottom)
-            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.leading.equalToSuperview().inset(Margin.large)
             $0.height.equalTo(14)
         }
         
@@ -336,34 +334,34 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         charts.snp.makeConstraints {
-            $0.top.equalTo(changePercentageLabel.snp.bottom).offset(appDelegate.smallMargin)
-            $0.horizontalEdges.equalToSuperview().inset(appDelegate.smallMargin)
-            $0.height.equalTo(appDelegate.screenHeight/3)
+            $0.top.equalTo(changePercentageLabel.snp.bottom).offset(Margin.small)
+            $0.horizontalEdges.equalToSuperview().inset(Margin.small)
+            $0.height.equalTo(ScreenSize.screenHeight/3)
         }
         
         timeStampLabel.snp.makeConstraints {
             $0.top.equalTo(charts.snp.bottom)
-            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.leading.equalToSuperview().inset(Margin.large)
         }
         
         marketInfoContainerLabel.snp.makeConstraints {
-            $0.top.equalTo(timeStampLabel.snp.bottom).offset(appDelegate.largeMargin)
-            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.equalTo(timeStampLabel.snp.bottom).offset(Margin.large)
+            $0.leading.equalToSuperview().inset(Margin.large)
         }
         
         marketInfoMoreButton.snp.makeConstraints {
             $0.centerY.equalTo(marketInfoContainerLabel.snp.centerY)
-            $0.trailing.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.trailing.equalToSuperview().inset(Margin.large)
         }
         
         marketInfoContainer.snp.makeConstraints {
-            $0.top.equalTo(marketInfoContainerLabel.snp.bottom).offset(appDelegate.largeMargin)
-            $0.horizontalEdges.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.equalTo(marketInfoContainerLabel.snp.bottom).offset(Margin.large)
+            $0.horizontalEdges.equalToSuperview().inset(Margin.large)
             $0.height.equalTo(140)
         }
         
         highestPrice24hLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.leading.equalToSuperview().inset(Margin.large)
         }
         
         highPrice24hContentLabel.snp.makeConstraints {
@@ -372,8 +370,8 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         lowPrice24hLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(appDelegate.largeMargin)
-            $0.leading.equalToSuperview().inset(appDelegate.screenWidth / 2 - CGFloat(appDelegate.smallMargin))
+            $0.top.equalToSuperview().inset(Margin.large)
+            $0.leading.equalToSuperview().inset(ScreenSize.screenWidth / 2 - CGFloat(Margin.small))
         }
         
         lowPrice24hContentLabel.snp.makeConstraints {
@@ -382,7 +380,7 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         allTimeHighPriceLabel.snp.makeConstraints {
-            $0.top.equalTo(highPrice24hContentLabel.snp.bottom).offset(appDelegate.smallMargin)
+            $0.top.equalTo(highPrice24hContentLabel.snp.bottom).offset(Margin.small)
             $0.leading.equalTo(highestPrice24hLabel.snp.leading)
         }
         
@@ -397,7 +395,7 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         allTimeLowPriceLabel.snp.makeConstraints {
-            $0.top.equalTo(lowPrice24hContentLabel.snp.bottom).offset(appDelegate.smallMargin)
+            $0.top.equalTo(lowPrice24hContentLabel.snp.bottom).offset(Margin.small)
             $0.leading.equalTo(lowPrice24hLabel.snp.leading)
         }
         
@@ -412,24 +410,24 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         investContainerLabel.snp.makeConstraints {
-            $0.top.equalTo(marketInfoContainer.snp.bottom).offset(appDelegate.largeMargin)
-            $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.equalTo(marketInfoContainer.snp.bottom).offset(Margin.large)
+            $0.leading.equalToSuperview().inset(Margin.large)
         }
         
         investMoreButton.snp.makeConstraints {
             $0.centerY.equalTo(investContainerLabel.snp.centerY)
-            $0.trailing.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.trailing.equalToSuperview().inset(Margin.large)
         }
         
         investContainer.snp.makeConstraints {
-            $0.top.equalTo(investContainerLabel.snp.bottom).offset(appDelegate.largeMargin)
-            $0.horizontalEdges.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.equalTo(investContainerLabel.snp.bottom).offset(Margin.large)
+            $0.horizontalEdges.equalToSuperview().inset(Margin.large)
             $0.height.equalTo(180)
             $0.bottom.equalToSuperview()
         }
         
         marketCapLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(appDelegate.largeMargin)
+            $0.top.leading.equalToSuperview().inset(Margin.large)
         }
         
         marketCapContentLabel.snp.makeConstraints {
@@ -438,7 +436,7 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         fullyDilutedValuationLabel.snp.makeConstraints {
-            $0.top.equalTo(marketCapContentLabel.snp.bottom).offset(appDelegate.mediumMargin)
+            $0.top.equalTo(marketCapContentLabel.snp.bottom).offset(Margin.medium)
             $0.leading.equalTo(marketCapLabel.snp.leading)
         }
         
@@ -449,7 +447,7 @@ final class CoinDetailViewController: BaseViewController {
         }
         
         totalVolumeLabel.snp.makeConstraints {
-            $0.top.equalTo(fullyDilutedValuationContentLabel.snp.bottom).offset(appDelegate.mediumMargin)
+            $0.top.equalTo(fullyDilutedValuationContentLabel.snp.bottom).offset(Margin.medium)
             $0.leading.equalTo(marketCapLabel.snp.leading)
         }
         
@@ -518,7 +516,7 @@ private extension CoinDetailViewController {
                 changePercentageLabel.text = NumberFormatManager.shared.checkNumber(number: changes) + "%"
                 changePercentageLabel.snp.remakeConstraints {
                     $0.top.equalTo(currentPrice.snp.bottom)
-                    $0.leading.equalToSuperview().inset(appDelegate.largeMargin)
+                    $0.leading.equalToSuperview().inset(Margin.large)
                     
                 }
                 
