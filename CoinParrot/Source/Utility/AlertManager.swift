@@ -39,4 +39,10 @@ final class AlertManager {
         root().present(alert, animated: true)
     }
     
+    func networkErrorAlert(type: NetworkError, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: "네트워크 에러", message: type.message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default, handler: handler)
+        alert.addAction(ok)
+        root().present(alert, animated: true)
+    }
 }
