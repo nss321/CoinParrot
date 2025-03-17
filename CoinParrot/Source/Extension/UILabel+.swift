@@ -23,4 +23,12 @@ extension UILabel {
         label.font = .informationTabNavTitle()
         return label
     }
+    
+    static func portFolioLabel() -> UILabel {
+        let label = UILabel()
+        label.text = "포트폴리오"
+        label.textColor = .coinParrotNavy
+        label.font = .navTitle()
+        return label
+    }
 }

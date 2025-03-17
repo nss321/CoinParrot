@@ -22,5 +22,7 @@ extension UIFont {
     
     /// heavy, 18, coinParrotNavy
     static func informationTabNavTitle() -> UIFont { return UIFont.systemFont(ofSize: 18, weight: .heavy) }
+    
+    static func navTitle() -> UIFont { return UIFont.systemFont(ofSize: 18, weight: .heavy) }
 }
 
