@@ -5,13 +5,14 @@
 //  Created by BAE on 3/17/25.
 //
 
+import RealmSwift
 import RxSwift
 import RxCocoa
 
 final class PortFolioViewModel: ViewModel {
     
     struct Input {
-        let viewDidLoadEvent: BehaviorRelay<Void>
+        let viewDidLoadEvent: PublishRelay<Void>
         let searchKeyword: ControlProperty<String?>
     }
     
@@ -20,15 +21,18 @@ final class PortFolioViewModel: ViewModel {
         let searchResult: Driver<[CoinDetail]>
     }
     
-    var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
+    private var realm = try! Realm()
+    private lazy var data = realm.objects(LikedCoinRealmSchema.self)
     
     func transform(input: Input) -> Output {
         let result = BehaviorRelay(value: [CoinDetail]())
         let searchResult = BehaviorRelay(value: [CoinDetail]())
         
         input.viewDidLoadEvent
-            .flatMap {
-                NetworkService.shared.callRequest(api: .coinList(["pepe", "bitcoin"]), type: [CoinDetail].self)
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                NetworkService.shared.callRequest(api: .coinList(owner.data.map{ $0.id }), type: [CoinDetail].self)
             }
             .subscribe(with: self) { owner, items in
                 result.accept(items)

@@ -23,6 +23,8 @@ final class PortFolioViewController: BaseViewController {
     
     private let viewModel: PortFolioViewModel
     
+    private var viewDidLoadTrigger = PublishRelay<Void>()
+    
     private let label = {
         let label = UILabel()
         label.text = "검색 결과가 없습니다."
@@ -50,9 +52,15 @@ final class PortFolioViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewDidLoadTrigger.accept(())
+        // TODO: 코인 정보 탭 - 트렌딩 코인 - 코인 상세에서 좋아요 상태인 코인을 포트폴리오 탭에서 삭제해도 코인정보 탭 내비게이션의 좋아요 버튼은 리프레쉬 되지 않는 문제 해결해야함.
+    }
+    
     override func bind() {
         let input = PortFolioViewModel.Input(
-            viewDidLoadEvent: BehaviorRelay(value: ()),
+            viewDidLoadEvent: viewDidLoadTrigger,
             searchKeyword: searchBar.rx.text
         )
         let output = viewModel.transform(input: input)
