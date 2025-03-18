@@ -24,10 +24,10 @@ class BaseViewController: UIViewController, ViewConfig {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
         configLayout()
         configView()
         configBackgroundColor()
+        bind()
     }
     
     func bind() { }

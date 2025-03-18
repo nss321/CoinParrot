@@ -40,7 +40,6 @@ final class PortFolioViewController: BaseViewController {
         view.layer.borderWidth = 1
         view.searchTextField.backgroundColor = .white
         view.backgroundImage = UIImage()
-        view.delegate = self
         return view
     }()
     
@@ -63,6 +62,13 @@ final class PortFolioViewController: BaseViewController {
                 owner.updateSnapshot(with: item)
             }
             .disposed(by: disposeBag)
+        
+        output.searchResult
+            .drive(with: self) { owner, item in
+                owner.updateSnapshot(with: item)
+            }
+            .disposed(by: disposeBag)
+
     }
     
     override func configLayout() {
@@ -118,38 +124,13 @@ private extension PortFolioViewController {
     }
     
     func updateSnapshot(with: [CoinDetail]) {
-        
         let dto = with.map {
-            SearchCoin(id: $0.id, name: $0.name, apiSymbol: "", symbol: "", marketCapRank: $0.marketCapRank, thumb: $0.image, large: "")
+            SearchCoin(id: $0.id, name: $0.name, apiSymbol: "", symbol: $0.symbol.uppercased(), marketCapRank: $0.marketCapRank, thumb: $0.image, large: "")
         }
-        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(dto, toSection: .main)
         dataSource.apply(snapshot)
     }
-    
-    func performQuery(with filter: String?) {
-        let filtered = mockSearchCoin.filter { $0.name.hasPrefix(filter ?? "") }
 
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(filtered)
-        dataSource.apply(snapshot, animatingDifferences: true)
-    }
-}
-
-extension PortFolioViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        print(#function)
-        let text = searchController.searchBar.text
-        performQuery(with: text)
-    }
-}
-
-extension PortFolioViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(#function)
-        performQuery(with: searchText)
-    }
 }
