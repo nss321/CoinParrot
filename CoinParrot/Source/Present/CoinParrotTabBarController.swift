@@ -35,7 +35,7 @@ final class CoinParrotTabBarController: UITabBarController {
         secondVC.tabBarItem.image = UIImage(systemName: "chart.bar.fill")
         secondVC.tabBarItem.title = "코인정보"
         
-        let thirdVC = UINavigationController(rootViewController: PortFolioViewController())
+        let thirdVC = UINavigationController(rootViewController: PortFolioViewController(viewModel: PortFolioViewModel()))
         thirdVC.tabBarItem.image = UIImage(systemName: "star")
         thirdVC.tabBarItem.title = "포트폴리오"
         

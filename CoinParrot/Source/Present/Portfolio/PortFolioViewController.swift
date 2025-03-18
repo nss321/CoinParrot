@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
 
 final class PortFolioViewController: BaseViewController {
@@ -18,6 +20,8 @@ final class PortFolioViewController: BaseViewController {
     typealias Item = SearchCoin
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    
+    private let viewModel: PortFolioViewModel
     
     private let label = {
         let label = UILabel()
@@ -42,8 +46,23 @@ final class PortFolioViewController: BaseViewController {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
+    init(viewModel: PortFolioViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func bind() {
+        let input = PortFolioViewModel.Input(
+            viewDidLoadEvent: BehaviorRelay(value: ()),
+            searchKeyword: searchBar.rx.text
+        )
+        let output = viewModel.transform(input: input)
         
+        output.likedCoins
+            .drive(with: self) { owner, item in
+                owner.updateSnapshot(with: item)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configLayout() {
@@ -67,6 +86,7 @@ final class PortFolioViewController: BaseViewController {
         navigationItem.setLeftBarButton(UIBarButtonItem(customView: UILabel.portFolioLabel()), animated: false)
         
         let registration = UICollectionView.CellRegistration<SearchCoinCollectionViewCell, Item>  { cell, indexPath, itemIdentifier in
+            
             cell.config(item: itemIdentifier)
         }
         
@@ -74,8 +94,6 @@ final class PortFolioViewController: BaseViewController {
             
             return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: itemIdentifier)
         })
-        
-        updateSnapshot()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -99,10 +117,15 @@ private extension PortFolioViewController {
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    func updateSnapshot() {
+    func updateSnapshot(with: [CoinDetail]) {
+        
+        let dto = with.map {
+            SearchCoin(id: $0.id, name: $0.name, apiSymbol: "", symbol: "", marketCapRank: $0.marketCapRank, thumb: $0.image, large: "")
+        }
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(mockSearchCoin, toSection: .main)
+        snapshot.appendItems(dto, toSection: .main)
         dataSource.apply(snapshot)
     }
     
