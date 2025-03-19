@@ -17,14 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="배정훈" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lnd-6W-cpz">
-                                <rect key="frame" x="165" y="369" width="63" height="29"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2차 리캡 과제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Akt-y0-fdl">
-                                <rect key="frame" x="132" y="411.66666666666669" width="129" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoinParrot" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Akt-y0-fdl">
+                                <rect key="frame" x="136.66666666666666" y="411.66666666666669" width="119.99999999999997" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -33,9 +27,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Lnd-6W-cpz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Gys-tC-NKq"/>
                             <constraint firstItem="Akt-y0-fdl" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KUd-4p-uNq"/>
-                            <constraint firstItem="Lnd-6W-cpz" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="0.9" id="VLk-WW-ebC"/>
                             <constraint firstItem="Akt-y0-fdl" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qSl-xz-oe5"/>
                         </constraints>
                     </view>
