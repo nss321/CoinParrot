@@ -22,8 +22,13 @@ final class PortFolioViewModel: ViewModel {
     }
     
     let disposeBag = DisposeBag()
-    private var realm = try! Realm()
-    private lazy var data = realm.objects(LikedCoinRealmSchema.self)
+//    private lazy var data = realm.objects(LikedCoinRealmSchema.self)
+    private let networkService: NetworkServiceProvider
+    private let alertManager = AlertManager.shared
+    
+    init(networkService: NetworkServiceProvider = NetworkService.shared) {
+        self.networkService = networkService
+    }
     
     func transform(input: Input) -> Output {
         let result = BehaviorRelay(value: [CoinDetail]())
@@ -31,15 +36,19 @@ final class PortFolioViewModel: ViewModel {
         
         input.viewDidLoadEvent
             .withUnretained(self)
-            .flatMap { owner, _ in
-                NetworkService.shared.callRequest(api: .coinList(owner.data.map{ $0.id }), type: [CoinDetail].self)
+            .flatMap { owner, _ -> Observable<[CoinDetail]> in
+                let realm = try! Realm()
+                let coinIds = realm.objects(LikedCoinRealmSchema.self)
+                return owner.networkService.callRequest(api: .coinList(coinIds.map {$0.id}), type: [CoinDetail].self)
+                    .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                    .observe(on: MainScheduler.instance)
+                    .catch { error in
+                        owner.alertManager.showSimpleAlert(title: "에러", message: error.localizedDescription)
+                        return Observable.just([])
+                    }
             }
-            .subscribe(with: self) { owner, items in
-                result.accept(items)
-                print(items, "item")
-            } onError: { owner, error in
-                AlertManager.shared.showSimpleAlert(title: "에러", message: error.localizedDescription)
-            }
+            .share(replay: 1, scope: .whileConnected)
+            .bind(to: result)
             .disposed(by: disposeBag)
 
         input.searchKeyword
