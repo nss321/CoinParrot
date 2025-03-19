@@ -76,6 +76,12 @@ final class PortFolioViewController: BaseViewController {
                 owner.updateSnapshot(with: item)
             }
             .disposed(by: disposeBag)
+        
+        output.error
+            .drive { error in
+                AlertManager.shared.showSimpleAlert(title: "네트워크 오류", message: error.message)
+            }
+            .disposed(by: disposeBag)
 
     }
     
