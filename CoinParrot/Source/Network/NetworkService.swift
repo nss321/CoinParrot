@@ -11,7 +11,12 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-final class NetworkService {
+protocol NetworkServiceProvider {
+    func callRequest<T: Decodable>(api: APIRequest, type: T.Type) -> Observable<T>
+    func callRequest<T: Decodable>(api: APIRequest, type: T.Type) -> Single<Result<T, APIError>>
+}
+
+final class NetworkService: NetworkServiceProvider {
     static let shared = NetworkService()
         
     private init() { }
