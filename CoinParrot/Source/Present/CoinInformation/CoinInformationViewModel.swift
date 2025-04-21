@@ -109,12 +109,14 @@ final class CoinInformationViewModel: ViewModel {
         let coinSection = TrendingHeader(
             title: "인기 검색어",
             subTitle: DateManager.shared.nowDate(),
-            items: response.coins[0...13].map { Trending.coin($0.item) })
-        
+            items: response.coins[0...13].map { Trending.coin($0.item) }
+        )
+
         let nftSection = TrendingHeader(
             title: "인기 NFT",
             subTitle: nil,
-            items: response.nfts.map { Trending.nft($0) })
+            items: response.nfts.map { Trending.nft($0) }
+        )
         
         return [coinSection, nftSection]
     }
