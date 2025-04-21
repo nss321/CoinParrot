@@ -49,6 +49,9 @@ final class CoinInformationViewController: BaseViewController {
         searchBar.layer.borderColor = UIColor.coinParrotGray.cgColor
         searchBar.searchTextField.backgroundColor = .white
         searchBar.backgroundImage = UIImage()
+        searchBar.inputAccessoryView = KeyboardToolbar(action: UIAction(handler: { _ in
+            print(#function, "tap")
+        }))
         return searchBar
     }()
     
